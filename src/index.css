@@ -82,7 +82,7 @@ body {
 button {
   width: 100%;
   font-size: 16px;
-  color: #ffffff;
+  color: black !important;
   background-color: #d7e1ec;
   border-radius: 15px;
   display: flex;
