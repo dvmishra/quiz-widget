@@ -52,7 +52,7 @@
     "prettier": "^2.3.0",
     "pretty-quick": "^3.1.0"
   },
-  "homepage": "https://dvmishra.github.io/quiz-widget",
+  "homepage": "https://dvmishra.github.io/quiz-widget/",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
