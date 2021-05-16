@@ -10,8 +10,11 @@
   "rules": {
     "max-len": ["error", { "code": 100 }],
     "prefer-promise-reject-errors": ["off"],
-    "react/jsx-filename-extension": ["off"],
+    "react/jsx-filename-extension": ["warn"],
     "react/prop-types": ["warn"],
-    "no-return-assign": ["warn"]
+    "no-return-assign": ["warn"],
+    "no-unused-vars": ["warn"],
+    "react/no-array-index-key": ["warn"],
+    "no-use-before-define": ["warn"]
   }
 }
