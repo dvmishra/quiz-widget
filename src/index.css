@@ -103,7 +103,7 @@ button {
 }
 
 button:hover {
-  background-color: #555e7d;
+  border: 4px solid #555e7d;
 }
 
 button:focus {
