@@ -20,18 +20,16 @@ export default function Quiz({ quiz }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [gameStatus, setGameStatus] = useState(true);
   const [score, setScore] = useState(0);
-  const [answer, setAnswer] = useState(null);
   const [option, setOption] = useState(null);
   const [allAnswers, setAllAnswers] = useState([]);
-  const handleAnswerButtonClick = (answerOption) => {
+  const handleAnswerButtonClick = (answerOption, index) => {
     const nextQuestion = currentQuestion + 1;
-
+    setOption(index);
     if (answerOption.isCorrect) {
       setScore(score + 1);
-      setAnswer(answerOption.answerText);
     }
     setTimeout(() => {
-      setAnswer(null);
+      setOption(null);
       if (nextQuestion < questions.length) {
         setCurrentQuestion(nextQuestion);
       } else {
@@ -46,12 +44,9 @@ export default function Quiz({ quiz }) {
     }, 1000);
   };
 
-  const checkOptions = (answerText) => {
-    if (answer !== null) {
-      if (answerText === answer) return "correct";
-      if (answerText !== answer) return "incorrect";
-    }
-    return "";
+  const checkOptions = (isCorrect) => {
+    if (isCorrect) return "correct";
+    else return "incorrect";
   };
 
   const replay = () => {
@@ -92,8 +87,12 @@ export default function Quiz({ quiz }) {
                 (answerOption, index) => (
                   <button
                     key={`${index}`}
-                    onClick={() => handleAnswerButtonClick(answerOption)}
-                    className={`${checkOptions(answerOption.answerText)}`}
+                    onClick={() => handleAnswerButtonClick(answerOption, index)}
+                    className={`${
+                      index === option
+                        ? checkOptions(answerOption.isCorrect)
+                        : ""
+                    }`}
                   >
                     {" "}
                     {answerOption.answerText}
