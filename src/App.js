@@ -12,19 +12,19 @@ export default function App({ domElement }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setLoading(true)
-    fetch(`https://quizes.free.beeceptor.com/quiz-maths`)
-      .then((response) => response.json())
-      .then((data) => {
-        setLoading(false);
-        console.log(data);
-        setData(data);
-      })
-      .catch((e) => {
-        console.log(e)
-        setLoading(false);
-        setError('error fetching from reddit');
-      });
+    setLoading(false)
+    // fetch(`https://quizes.free.beeceptor.com/quiz-maths`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setLoading(false);
+    //     console.log(data);
+    //     setData(data);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e)
+    //     setLoading(false);
+    //     setError('error fetching from reddit');
+    //   });
   }, [game])
 
   
@@ -37,7 +37,7 @@ export default function App({ domElement }) {
       <div className="quiz_widget__inner">
         {loading && "Loading..."}
         {error && error}
-        {!!data.length && renderQuiz(game)}
+        {renderQuiz(game)}
       </div>
       <p className="reddit_widget__powered_by">
         This widget is powered by{" "}

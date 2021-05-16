@@ -5,15 +5,13 @@ import questionsSub from "./quiz-subtraction.json";
 import { storeData, clearData } from "./storeData";
 
 export default function Quiz({ quiz }) {
-
-  console.log(quiz);
   let questions = [];
   switch (quiz) {
-    case 'simple_math_addition':
+    case "simple_math_addition":
       questions = questionsAdd;
       break;
-    case 'simple_math_subtraction':
-      questions = questionsSub;;
+    case "simple_math_subtraction":
+      questions = questionsSub;
       break;
     default:
       questions = questionsAdd;
@@ -23,14 +21,14 @@ export default function Quiz({ quiz }) {
   const [gameStatus, setGameStatus] = useState(true);
   const [score, setScore] = useState(0);
   const [answer, setAnswer] = useState(null);
-
-  const [allAnswers, setAllAnswers] = useState([])
-  const handleAnswerButtonClick = (isCorrect, answerText) => {
+  const [option, setOption] = useState(null);
+  const [allAnswers, setAllAnswers] = useState([]);
+  const handleAnswerButtonClick = (answerOption) => {
     const nextQuestion = currentQuestion + 1;
 
-    if (isCorrect) {
+    if (answerOption.isCorrect) {
       setScore(score + 1);
-      setAnswer(answerText);
+      setAnswer(answerOption.answerText);
     }
     setTimeout(() => {
       setAnswer(null);
@@ -51,7 +49,7 @@ export default function Quiz({ quiz }) {
   const checkOptions = (answerText) => {
     if (answer !== null) {
       if (answerText === answer) return "correct";
-      else return "incorrect";
+      if (answerText !== answer) return "incorrect";
     }
     return "";
   };
@@ -63,9 +61,9 @@ export default function Quiz({ quiz }) {
   };
 
   const clearScore = () => {
-    clearData("scores")
+    clearData("scores");
     setAllAnswers([]);
-    replay()
+    replay();
   };
 
   return (
@@ -94,12 +92,7 @@ export default function Quiz({ quiz }) {
                 (answerOption, index) => (
                   <button
                     key={`${index}`}
-                    onClick={() =>
-                      handleAnswerButtonClick(
-                        answerOption.isCorrect,
-                        answerOption.answerText
-                      )
-                    }
+                    onClick={() => handleAnswerButtonClick(answerOption)}
                     className={`${checkOptions(answerOption.answerText)}`}
                   >
                     {" "}
