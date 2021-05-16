@@ -103,7 +103,14 @@ button {
 }
 
 button:hover {
-  border: 4px solid #555e7d;
+  animation-name: background-color;
+    animation-duration: 500ms;
+    }
+
+    @keyframes background-color {
+        100% {
+        background-color:#4065F3;
+    }
 }
 
 button:focus {
