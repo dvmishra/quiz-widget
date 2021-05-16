@@ -12,3 +12,12 @@ export const storeData = (storageKey, data) => {
   }
   return JSON.parse(localStorage.getItem(storageKey));
 };
+
+export const clearData = (storageKey) => {
+  const values = localStorage.getItem(storageKey);
+  if(values !== null){
+    localStorage.removeItem(storageKey);
+    return true;
+  }
+  return false;
+}

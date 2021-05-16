@@ -1,14 +1,29 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./App.css";
-import questions from "./quiz-data.json";
-import { storeData } from "./storeData";
+import questionsAdd from "./quiz-addition.json";
+import questionsSub from "./quiz-subtraction.json";
+import { storeData, clearData } from "./storeData";
 
-export default function Quiz() {
+export default function Quiz({ quiz }) {
+
+  console.log(quiz);
+  let questions = [];
+  switch (quiz) {
+    case 'simple_math_addition':
+      questions = questionsAdd;
+      break;
+    case 'simple_math_subtraction':
+      questions = questionsSub;;
+      break;
+    default:
+      questions = questionsAdd;
+  }
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [gameStatus, setGameStatus] = useState(true);
   const [score, setScore] = useState(0);
   const [answer, setAnswer] = useState(null);
-  
+
   const [allAnswers, setAllAnswers] = useState([])
   const handleAnswerButtonClick = (isCorrect, answerText) => {
     const nextQuestion = currentQuestion + 1;
@@ -47,6 +62,12 @@ export default function Quiz() {
     setScore(0);
   };
 
+  const clearScore = () => {
+    clearData("scores")
+    setAllAnswers([]);
+    replay()
+  };
+
   return (
     <div className="App">
       <div className="shadow">
@@ -56,6 +77,7 @@ export default function Quiz() {
               You scored {score} out of {questions.length}
             </div>
             <button onClick={replay}>Replay</button>
+            <button onClick={clearScore}>Clear</button>
           </>
         ) : (
           <div>
