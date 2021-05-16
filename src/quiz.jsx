@@ -1,16 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
-import "./App.css";
-import questionsAdd from "./quiz-addition.json";
-import questionsSub from "./quiz-subtraction.json";
-import { storeData, clearData } from "./storeData";
+import React, { useState } from 'react';
+import './App.css';
+import questionsAdd from './quiz-addition.json';
+import questionsSub from './quiz-subtraction.json';
+import { storeData, clearData } from './storeData';
 
 export default function Quiz({ quiz }) {
   let questions = [];
   switch (quiz) {
-    case "simple_math_addition":
+    case 'simple_math_addition':
       questions = questionsAdd;
       break;
-    case "simple_math_subtraction":
+    case 'simple_math_subtraction':
       questions = questionsSub;
       break;
     default:
@@ -35,18 +35,18 @@ export default function Quiz({ quiz }) {
       } else {
         setGameStatus(false);
         setAllAnswers(
-          storeData("scores", {
+          storeData('scores', {
             total: nextQuestion,
             correctAnswers: score,
-          })
+          }),
         );
       }
     }, 1000);
   };
 
   const checkOptions = (isCorrect) => {
-    if (isCorrect) return "correct";
-    else return "incorrect";
+    if (isCorrect) return 'correct';
+    return 'incorrect';
   };
 
   const replay = () => {
@@ -56,7 +56,7 @@ export default function Quiz({ quiz }) {
   };
 
   const clearScore = () => {
-    clearData("scores");
+    clearData('scores');
     setAllAnswers([]);
     replay();
   };
@@ -69,8 +69,12 @@ export default function Quiz({ quiz }) {
             <div className="score-section">
               You scored {score} out of {questions.length}
             </div>
-            <button onClick={replay}>Replay</button>
-            <button onClick={clearScore}>Clear</button>
+            <button type="button" onClick={replay}>
+              Replay
+            </button>
+            <button type="button" onClick={clearScore}>
+              Clear
+            </button>
           </>
         ) : (
           <div>
@@ -78,27 +82,22 @@ export default function Quiz({ quiz }) {
               <div className="question-count">
                 <span>Question {currentQuestion + 1} </span>/{questions.length}
               </div>
-              <div className="question-text">
-                {questions[currentQuestion].questionText}
-              </div>
+              <div className="question-text">{questions[currentQuestion].questionText}</div>
             </div>
             <div className="answer-section">
-              {questions[currentQuestion].answerOptions.map(
-                (answerOption, index) => (
-                  <button
-                    key={`${index}`}
-                    onClick={() => handleAnswerButtonClick(answerOption, index)}
-                    className={`${
-                      index === option
-                        ? checkOptions(answerOption.isCorrect)
-                        : ""
-                    }`}
-                  >
-                    {" "}
-                    {answerOption.answerText}
-                  </button>
-                )
-              )}
+              {questions[currentQuestion].answerOptions.map((answerOption, index) => (
+                <button
+                  type="button"
+                  key={`${index}`}
+                  onClick={() => handleAnswerButtonClick(answerOption, index)}
+                  className={`${
+                    index === option ? checkOptions(answerOption.isCorrect) : ''
+                  } option`}
+                >
+                  {' '}
+                  {answerOption.answerText}
+                </button>
+              ))}
             </div>
           </div>
         )}
