@@ -14,7 +14,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "dev": "parcel src/index.js --no-source-maps -d bundles",
+    "dev": "parcel build src/index.js --no-source-maps -d bundles",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
