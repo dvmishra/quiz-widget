@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Container } from '@material-ui/core';
 
-
 export const Dashboard = (props) => {
   return (
     <Paper variant="outlined" style={{ display: 'flex', flexDirection: 'row' }}>
@@ -18,7 +17,6 @@ export const Dashboard = (props) => {
     </Paper>
   );
 };
-
 
 const useStyles = makeStyles({
   root: {
@@ -37,17 +35,17 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
   inside: {
-    flexDirection: "row",
-    display: "flex",
-    height: "60%",
+    flexDirection: 'row',
+    display: 'flex',
+    height: '60%',
     alignContent: 'center',
     justifyContent: 'center',
-    marign: "0px 20px"
+    marign: '0px 20px',
   },
   button: {
     width: '100%',
-    height: '100%'
-  }
+    height: '100%',
+  },
 });
 
 function SimpleCard() {
@@ -56,36 +54,42 @@ function SimpleCard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => { setLoading(false) }, 2000000)
-  })
+    setTimeout(() => {
+      setLoading(false);
+    }, 200000000);
+  });
 
   return (
     <Card className={classes.root}>
-      <CardContent className={classes.button}>
+      <CardContent>
         {loading ? (
           <Skeleton variant="rect" width="100%" height="20%">
             <div style={{ paddingTop: '10%' }} />
           </Skeleton>
         ) : (
           <img
-            src="https://i.pinimg.com/originals/5a/bf/93/5abf939069cc0ae4633e9b1670f11ed5.jpg" width="300" height="400" alt=""
+            src="https://i.pinimg.com/originals/5a/bf/93/5abf939069cc0ae4633e9b1670f11ed5.jpg"
+            width="300"
+            height="400"
+            alt=""
           />
         )}
       </CardContent>
 
-      <CardContent>
+      <CardContent style={{ height: '75%' }}>
         {loading ? (
           <Skeleton variant="rect" width="100%" height="100%">
             <div style={{ paddingTop: '10%' }} />
           </Skeleton>
         ) : (
           <img
-            src="https://i.pinimg.com/originals/5a/bf/93/5abf939069cc0ae4633e9b1670f11ed5.jpg" width="300" height="400" alt=""
+            src="https://i.pinimg.com/originals/5a/bf/93/5abf939069cc0ae4633e9b1670f11ed5.jpg"
+            width="300"
+            height="400"
+            alt=""
           />
         )}
       </CardContent>
-
-
     </Card>
   );
 }
