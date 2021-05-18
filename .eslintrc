@@ -17,6 +17,7 @@
     "react/no-array-index-key": ["warn"],
     "no-use-before-define": ["warn"],
     "import/prefer-default-export": ["warn"],
-    "arrow-body-style": ["warn"]
+    "arrow-body-style": ["warn"],
+    "import/no-unresolved": [2, { "caseSensitive": false }]
   }
 }
