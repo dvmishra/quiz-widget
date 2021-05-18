@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
-import questionsAdd from './quiz-addition.json';
-import questionsSub from './quiz-subtraction.json';
-import { storeData, clearData } from './storeData';
+import questionsAdd from '../../quiz-addition.json';
+import questionsSub from '../../quiz-subtraction.json';
+import { storeData, clearData } from '../../storeData';
 
 export default function Quiz({ quiz }) {
   let questions = [];

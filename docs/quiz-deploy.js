@@ -21,5 +21,5 @@ function includeJS(file) {
   }
     
   /* Include Many js files */
-  includeJS('/Users/admin/Documents/react/widget-quiz/docs/index-bundle.js');
-  includeCSS('/Users/admin/Documents/react/widget-quiz/docs/index-bundle.css');
+  includeJS('../bundles/index.js');
+  includeCSS('../bundles/index.css');

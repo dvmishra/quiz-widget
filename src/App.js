@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Quiz from './quiz';
+import Quiz from './Components/Quiz/Quiz';
 
 export default function App({ domElement }) {
   const title = domElement.getAttribute('data-title');
