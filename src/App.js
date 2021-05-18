@@ -28,20 +28,21 @@ export default function App({ domElement }) {
   }, [game]);
 
   return (
-    <div className="quiz_widget__app">
-      <h1 className="quiz_widget__header">{title}</h1>
-      <div className="quiz_widget__inner">
-        {loading && 'Loading...'}
-        {error && error}
-        <Dashboard />
-      </div>
-      <p className="reddit_widget__powered_by">
-        This widget is powered by{' '}
-        <a href="https://dvm.academy" rel="noopener noreferrer" target="_blank">
-          DVM Academy
-        </a>
-      </p>
-    </div>
+    // <div className="quiz_widget__app">
+    //   <h1 className="quiz_widget__header">{title}</h1>
+    //   <div className="quiz_widget__inner">
+    //     {loading && 'Loading...'}
+    //     {error && error}
+    //     <Dashboard />
+    //   </div>
+    //   <p className="reddit_widget__powered_by">
+    //     This widget is powered by{' '}
+    //     <a href="https://dvm.academy" rel="noopener noreferrer" target="_blank">
+    //       DVM Academy
+    //     </a>
+    //   </p>
+    // </div>
+      <Dashboard />
   );
 }
 
