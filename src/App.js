@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Dashboard } from './Components/Layout/Dashboard';
 import Quiz from './Components/Quiz/Quiz';
 
 export default function App({ domElement }) {
@@ -32,7 +33,7 @@ export default function App({ domElement }) {
       <div className="quiz_widget__inner">
         {loading && 'Loading...'}
         {error && error}
-        {renderQuiz(game)}
+        <Dashboard />
       </div>
       <p className="reddit_widget__powered_by">
         This widget is powered by{' '}
