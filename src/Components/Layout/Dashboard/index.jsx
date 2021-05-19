@@ -8,6 +8,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Container } from '@material-ui/core';
+import Timer from '../../Quiz/Timer';
+import QuestionSection from '../../Quiz/QuestionSection';
 
 export const Dashboard = (props) => {
   return (
@@ -56,7 +58,7 @@ function SimpleCard() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 200000000);
+    }, 3000);
   });
 
   return (
@@ -67,12 +69,13 @@ function SimpleCard() {
             <div style={{ paddingTop: '10%' }} />
           </Skeleton>
         ) : (
-          <img
-            src="https://i.pinimg.com/originals/5a/bf/93/5abf939069cc0ae4633e9b1670f11ed5.jpg"
-            width="300"
-            height="400"
-            alt=""
-          />
+          // <img
+          //   src="https://i.pinimg.com/originals/5a/bf/93/5abf939069cc0ae4633e9b1670f11ed5.jpg"
+          //   width="300"
+          //   height="400"
+          //   alt=""
+          // />
+          <QuestionSection duration={5 * 60} />
         )}
       </CardContent>
 
