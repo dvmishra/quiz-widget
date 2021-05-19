@@ -12,7 +12,7 @@ const Timer = ({ duration }) => {
   useEffect(() => {
     const id = setInterval(() => {
       clearInterval(id);
-      setTime(time - 1);
+      if (time !== 0) setTime(time - 1);
     }, 1000);
   }, [time]);
 
