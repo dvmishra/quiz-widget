@@ -23,7 +23,6 @@ export const Dashboard = (props) => {
 const useStyles = makeStyles({
   root: {
     width: 900,
-    height: 600,
   },
   bullet: {
     display: 'inline-block',
@@ -79,7 +78,7 @@ function SimpleCard() {
         )}
       </CardContent>
 
-      <CardContent style={{ height: '75%' }}>
+      {/* <CardContent style={{ height: '75%' }}>
         {loading ? (
           <Skeleton variant="rect" width="100%" height="100%">
             <div style={{ paddingTop: '10%' }} />
@@ -92,7 +91,7 @@ function SimpleCard() {
             alt=""
           />
         )}
-      </CardContent>
+      </CardContent> */}
     </Card>
   );
 }
