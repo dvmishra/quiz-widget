@@ -23,7 +23,6 @@ const Timer = ({ duration }) => {
     const id = setInterval(() => {
       if (time !== 0) {
         setTime(time - 1);
-        setProgress(progress + 100 / time);
       }
     }, 1000);
 
@@ -31,6 +30,14 @@ const Timer = ({ duration }) => {
       clearInterval(id);
     };
   }, [time]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setProgress(progress + 1);
+    }, (duration * 1000) / 100);
+
+    return () => clearInterval(id);
+  }, [progress]);
 
   const displayTime = () => moment.duration(time, 'seconds').format('mm:ss');
 
