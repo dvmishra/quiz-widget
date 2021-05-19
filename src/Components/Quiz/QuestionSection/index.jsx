@@ -1,4 +1,4 @@
-import { Card, Grid, TextField, Typography } from '@material-ui/core';
+import { Button, Card, Grid, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Timer from '../Timer';
@@ -40,6 +40,11 @@ const QuestionSection = ({ duration }) => {
             10
           </Typography>
         </Grid>
+        <Button variant="contained" color="primary" style={{ marginTop: 10, width: '50%' }}>
+          <Typography variant="h6" display="inline" style={{ color: 'white' }}>
+            NEXT
+          </Typography>
+        </Button>
       </Card>
     </>
   );
