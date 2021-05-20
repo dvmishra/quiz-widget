@@ -16,14 +16,14 @@ const useStyles = makeStyles({
 
 const Timer = ({ duration }) => {
   const classes = useStyles();
-  const [progress, setProgress] = React.useState(0);
+  const [progress, setProgress] = React.useState(100);
   const [time, setTime] = useState(duration);
   const factor = Math.floor(duration / 100);
   useEffect(() => {
     const id = setInterval(() => {
       if (time !== 0) {
         setTime(time - 1);
-        if (time % factor === 0) setProgress(progress + 1);
+        if (time % factor === 0) setProgress(progress - 1);
       }
     }, 1000);
     return () => {
