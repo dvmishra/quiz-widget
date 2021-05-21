@@ -25,7 +25,7 @@ const QuestionSection = ({ duration }) => {
           textAlign: 'center',
           marginTop: '1%',
           height: '100%',
-          boxShadow: 'none',
+          background: 'transparent',
         }}
       >
         <CardContent>

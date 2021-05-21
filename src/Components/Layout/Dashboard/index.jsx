@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { Container } from '@material-ui/core';
 import Timer from '../../Quiz/Timer';
 import QuestionSection from '../../Quiz/QuestionSection';
+import './style.css';
 
 export const Dashboard = (props) => {
   return (
@@ -61,7 +62,7 @@ function SimpleCard() {
   });
 
   return (
-    <Card className={classes.root}>
+    <Card className={[classes.root, 'dashboard-background']}>
       <CardContent>
         {loading ? (
           <Skeleton variant="rect" width="100%" height="20%">
