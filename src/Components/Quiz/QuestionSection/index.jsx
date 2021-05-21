@@ -14,17 +14,15 @@ const useStyles = makeStyles({
   },
 });
 
-
-
 const QuestionSection = ({ duration }) => {
-
   const classes = useStyles();
   const [numberOne, setNumberOne] = useState(0);
   const [numberTwo, setNumberTwo] = useState(0);
   const [numberThree, setNumberThree] = useState(0);
+  const [response, setResponse] = useState('');
+  const [error, setError] = useState(false);
 
   const genrateValues = () => {
-
     const answers = [10, 100, 1000];
     const answer = answers[Math.floor(Math.random() * answers.length)];
 
@@ -48,7 +46,6 @@ const QuestionSection = ({ duration }) => {
     setNumberThree(answer);
     setNumberTwo(number2);
     setNumberOne(number1);
-
   };
 
   useEffect(() => {
@@ -56,24 +53,33 @@ const QuestionSection = ({ duration }) => {
   }, []);
 
   const isValidMove = (event) => {
-
-    if (Number(event.target.value) === numberTwo) {
-      event.target.value = "";
+    const input = Number(event.target.value);
+    setResponse(event.target.value);
+    if (event.target.value === '') {
+      setError(false);
+    } else if (input !== numberTwo) {
+      setError(true);
+    } else {
+      setResponse('');
+      setError(false);
       genrateValues();
     }
-
-  }
-
-
+  };
 
   return (
     <>
       <CourseHeader heading={'Course Introduction'} />
       <Timer duration={duration} />
-      <Card style={{
-        padding: '50px', textAlign: 'center', marginTop: '10%', height: '100%', background: 'transparent',
-        backdropFilter: 'blur(4px)'
-      }}>
+      <Card
+        style={{
+          padding: '50px',
+          textAlign: 'center',
+          marginTop: '3%',
+          height: '100%',
+          background: 'transparent',
+          backdropFilter: 'blur(4px)',
+        }}
+      >
         <Grid>
           <Typography variant="h3" display="inline">
             {numberOne}
@@ -86,7 +92,16 @@ const QuestionSection = ({ duration }) => {
               multiline={false}
               rowsMax={1}
               className={classes.root}
-              inputProps={{ style: { paddingLeft: 0 }, maxLength: (numberThree - numberOne).toString().length, inputMode: 'numeric' }}
+              inputProps={{
+                style: {
+                  padding: 0,
+                  border: `${error ? '2px' : '1px'} solid ${error ? 'red' : 'black'}`,
+                },
+                maxLength: (numberThree - numberOne).toString().length,
+                inputMode: 'numeric',
+              }}
+              error={error}
+              value={response}
               onChange={(event) => isValidMove(event)}
             />
           </Typography>
