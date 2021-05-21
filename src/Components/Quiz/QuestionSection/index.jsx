@@ -34,10 +34,10 @@ const QuestionSection = ({ duration }) => {
         number1 = Math.round(Math.random() * 9);
         break;
       case 100:
-        number1 = Math.round(Math.random() * 99);
+        number1 = 10 + Math.round(Math.random() * 89);
         break;
       case 1000:
-        number1 = Math.round(Math.random() * 999);
+        number1 = 100 + Math.round(Math.random() * 899);
         break;
       default:
         number1 = Math.round(Math.random() * 10);
@@ -86,7 +86,7 @@ const QuestionSection = ({ duration }) => {
               multiline={false}
               rowsMax={1}
               className={classes.root}
-              inputProps={{ style: { paddingLeft: 0 }, maxLength: (numberThree - numberOne).toString().length }}
+              inputProps={{ style: { paddingLeft: 0 }, maxLength: (numberThree - numberOne).toString().length, inputMode: 'numeric' }}
               onChange={(event) => isValidMove(event)}
             />
           </Typography>
