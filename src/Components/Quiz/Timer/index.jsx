@@ -14,27 +14,32 @@ const useStyles = makeStyles({
     position: 'relative',
     top: '30px',
   },
-  colorPrimary: {
-    background: 'green',
-  },
 });
 
 const Timer = ({ duration }) => {
   const classes = useStyles();
   const [progress, setProgress] = React.useState(100);
   const [time, setTime] = useState(duration);
+  const [progressColor, setProgressColor] = useState('green');
   const factor = Math.floor(duration / 100);
   useEffect(() => {
     const id = setInterval(() => {
       if (time !== 0) {
         setTime(time - 1);
         if (time % factor === 0) setProgress(progress - 1);
+        changeColor();
       }
     }, 1000);
     return () => {
       clearInterval(id);
     };
   }, [time]);
+
+  const changeColor = () => {
+    if (time === Math.round(duration / 2)) setProgressColor('yellow');
+    else if (time === 60) setProgressColor('red');
+    else setProgressColor('green');
+  };
 
   const displayTime = () => moment.duration(time, 'seconds').format('hh:mm:ss');
 
@@ -44,8 +49,8 @@ const Timer = ({ duration }) => {
         <LinearProgress
           variant="determinate"
           value={progress}
-          className={classes.colorPrimary}
-          style={{ height: '5px ' }}
+          classes={{ colorPrimary: progressColor }}
+          style={{ height: '5px' }}
         />
       </div>
       <div
