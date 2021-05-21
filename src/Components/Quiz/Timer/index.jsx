@@ -48,7 +48,9 @@ const Timer = ({ duration }) => {
           style={{ height: '5px ' }}
         />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'end', position: 'relative', zIndex: '10' }}>
+      <div
+        style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', zIndex: '10' }}
+      >
         <TimeContainer>{displayTime()}</TimeContainer>
       </div>
     </>

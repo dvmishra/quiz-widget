@@ -26,6 +26,7 @@ const QuestionSection = ({ duration }) => {
           marginTop: '1%',
           height: '100%',
           background: 'transparent',
+          backdropFilter: 'blur(4px)'
         }}
       >
         <CardContent>
