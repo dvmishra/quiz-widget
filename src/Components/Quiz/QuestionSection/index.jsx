@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Timer from '../Timer';
 import Dashboard from '../../Introduction';
 import CourseHeader from '../CourseHeader';
+import Message from '../Message';
 
 const useStyles = makeStyles({
   root: {
@@ -21,6 +22,8 @@ const QuestionSection = ({ duration }) => {
   const [numberThree, setNumberThree] = useState(0);
   const [response, setResponse] = useState('');
   const [error, setError] = useState(false);
+  const [time, setTime] = useState(duration);
+  const [count, setCount] = useState(0);
 
   const genrateValues = () => {
     const answers = [10, 100, 1000];
@@ -63,62 +66,70 @@ const QuestionSection = ({ duration }) => {
       setResponse('');
       setError(false);
       genrateValues();
+      setCount(count + 1);
     }
   };
 
   return (
     <>
       <CourseHeader heading={'Course Introduction'} />
-      <Timer duration={duration} />
-      <Card
-        style={{
-          padding: '50px',
-          textAlign: 'center',
-          marginTop: '3%',
-          height: '100%',
-          background: 'transparent',
-          backdropFilter: 'blur(4px)',
-        }}
-      >
-        <Grid>
-          <Typography variant="h3" display="inline">
-            {numberOne}
-          </Typography>
-          <Typography variant="h3" display="inline">
-            +
-          </Typography>
-          <Typography variant="h3" display="inline">
-            <TextField
-              multiline={false}
-              rowsMax={1}
-              className={classes.root}
-              inputProps={{
-                style: {
-                  padding: 0,
-                  border: `${error ? '2px' : '1px'} solid ${error ? 'red' : 'black'}`,
-                },
-                maxLength: (numberThree - numberOne).toString().length,
-                inputMode: 'numeric',
-              }}
-              error={error}
-              value={response}
-              onChange={(event) => isValidMove(event)}
-            />
-          </Typography>
-          <Typography variant="h3" display="inline">
-            =
-          </Typography>
-          <Typography variant="h3" display="inline">
-            {numberThree}
-          </Typography>
-        </Grid>
-        {/* <Button 
-        variant="contained" color="primary" style={{ marginTop: 10, width: '50%' }}>
-          <Typography variant="h6" display="inline" style={{ color: 'white' }}>
-            NEXT
-          </Typography>
-        </Button> */}
-      </Card>
+      {time > 0 ? (
+        <>
+          <Timer duration={duration} updateDuration={(remainingTime) => setTime(remainingTime)} />
+          <Card
+            style={{
+              padding: '50px',
+              textAlign: 'center',
+              marginTop: '3%',
+              height: '100%',
+              background: 'transparent',
+              backdropFilter: 'blur(4px)',
+            }}
+          >
+            <Grid>
+              <Typography variant="h3" display="inline">
+                {numberOne}
+              </Typography>
+              <Typography variant="h3" display="inline">
+                +
+              </Typography>
+              <Typography variant="h3" display="inline">
+                <TextField
+                  multiline={false}
+                  rowsMax={1}
+                  className={classes.root}
+                  inputProps={{
+                    style: {
+                      padding: 0,
+                      border: `${error ? '2px' : '1px'} solid ${error ? 'red' : 'black'}`,
+                    },
+                    maxLength: (numberThree - numberOne).toString().length,
+                    inputMode: 'numeric',
+                  }}
+                  error={error}
+                  value={response}
+                  onChange={(event) => isValidMove(event)}
+                />
+              </Typography>
+              <Typography variant="h3" display="inline">
+                =
+              </Typography>
+              <Typography variant="h3" display="inline">
+                {numberThree}
+              </Typography>
+            </Grid>
+          </Card>
+        </>
+      ) : (
+        <>
+          <Message>
+            <Typography variant="h3" display="inline">
+              Game Over
+            </Typography>
+            <Typography variant="h4">Your score: {count}</Typography>
+          </Message>
+        </>
+      )}
     </>
   );
 };

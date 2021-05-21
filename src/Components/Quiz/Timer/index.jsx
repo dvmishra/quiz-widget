@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Timer = ({ duration }) => {
+const Timer = ({ duration, updateDuration }) => {
   const classes = useStyles();
   const [progress, setProgress] = React.useState(100);
   const [time, setTime] = useState(duration);
@@ -29,6 +29,7 @@ const Timer = ({ duration }) => {
         if (time % factor === 0) setProgress(progress - 1);
         changeColor();
       }
+      updateDuration(time);
     }, 1000);
     return () => {
       clearInterval(id);
@@ -66,4 +67,5 @@ export default Timer;
 
 Timer.propTypes = {
   duration: PropTypes.number.isRequired,
+  updateDuration: PropTypes.func.isRequired,
 };
