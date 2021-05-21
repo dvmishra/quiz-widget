@@ -11,6 +11,11 @@ momentDurationFormatSetup(moment);
 const useStyles = makeStyles({
   root: {
     width: '100%',
+    position: 'relative',
+    top: '30px',
+  },
+  colorPrimary: {
+    background: 'green',
   },
 });
 
@@ -31,15 +36,22 @@ const Timer = ({ duration }) => {
     };
   }, [time]);
 
-  const displayTime = () => moment.duration(time, 'seconds').format('mm:ss');
+  const displayTime = () => moment.duration(time, 'seconds').format('hh:mm:ss');
 
   return (
-    <Card>
-      <TimeContainer>{displayTime()}</TimeContainer>
+    <>
       <div className={classes.root}>
-        <LinearProgress variant="determinate" value={progress} />
+        <LinearProgress
+          variant="determinate"
+          value={progress}
+          className={classes.colorPrimary}
+          style={{ height: '5px ' }}
+        />
       </div>
-    </Card>
+      <div style={{ display: 'flex', justifyContent: 'end', position: 'relative', zIndex: '10' }}>
+        <TimeContainer>{displayTime()}</TimeContainer>
+      </div>
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Dashboard } from './Components/Layout/Dashboard';
 import Quiz from './Components/Quiz/Quiz';
+import './style.css';
 
 export default function App({ domElement }) {
   const title = domElement.getAttribute('data-title');
@@ -42,7 +43,7 @@ export default function App({ domElement }) {
     //     </a>
     //   </p>
     // </div>
-      <Dashboard />
+    <Dashboard />
   );
 }
 
