@@ -21,6 +21,7 @@
     "import/no-unresolved": [2, { "caseSensitive": false }],
     "react/jsx-curly-brace-presence": "warn",
     "react/self-closing-comp": "warn",
-    "prefer-const": ["warn"]
+    "prefer-const": ["warn"],
+    "no-param-reassign": ["warn"]
   }
 }
