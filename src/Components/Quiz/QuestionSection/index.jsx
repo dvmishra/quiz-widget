@@ -63,9 +63,11 @@ const QuestionSection = ({ duration }) => {
     } else if (input !== numberTwo) {
       setError(true);
     } else {
-      setResponse('');
+      setTimeout(() => {
+        setResponse('');
+        genrateValues();
+      }, 500);
       setError(false);
-      genrateValues();
       setCount(count + 1);
     }
   };
@@ -76,16 +78,7 @@ const QuestionSection = ({ duration }) => {
       {time > 0 ? (
         <FadeInUpAnimate>
           <Timer duration={duration} updateDuration={(remainingTime) => setTime(remainingTime)} />
-          <Card
-            style={{
-              padding: '50px',
-              textAlign: 'center',
-              marginTop: '3%',
-              height: '100%',
-              background: 'transparent',
-              backdropFilter: 'blur(4px)',
-            }}
-          >
+          <Message>
             <Grid>
               <Typography variant="h3" display="inline">
                 {numberOne}
@@ -118,7 +111,7 @@ const QuestionSection = ({ duration }) => {
                 {numberThree}
               </Typography>
             </Grid>
-          </Card>
+          </Message>
         </FadeInUpAnimate>
       ) : (
         <SlideInRightAnimate>
