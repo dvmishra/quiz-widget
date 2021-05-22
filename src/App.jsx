@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Grid } from '@material-ui/core';
 import { Dashboard } from './Components/Layout/Dashboard';
 import Quiz from './Components/Quiz/Quiz';
 import './style.css';
+
 
 export default function App({ domElement }) {
   const title = domElement.getAttribute('data-title');
@@ -43,7 +45,9 @@ export default function App({ domElement }) {
     //     </a>
     //   </p>
     // </div>
-    <Dashboard />
+    <Grid container>
+      <Dashboard />
+    </Grid>
   );
 }
 

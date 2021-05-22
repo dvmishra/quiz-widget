@@ -2,3 +2,13 @@
   background: url('../../../images/background.jpg');
   background-repeat: no-repeat;
 }
+
+.container {
+  width: 900px;
+}
+
+@media only screen and (max-width: 905px) {
+  .container {
+    width: auto;
+  }
+}

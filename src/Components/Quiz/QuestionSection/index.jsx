@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Card, Grid, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Timer from '../Timer';
@@ -72,6 +72,11 @@ const QuestionSection = ({ duration }) => {
     }
   };
 
+  const replay = () => {
+    setTime(duration);
+    setResponse('');
+  };
+
   return (
     <>
       <CourseHeader heading="Course Introduction" />
@@ -88,6 +93,7 @@ const QuestionSection = ({ duration }) => {
               </Typography>
               <Typography variant="h3" display="inline" style={{ padding: 5 }}>
                 <TextField
+                  autoFocus
                   multiline={false}
                   rowsMax={1}
                   className={classes.root}
@@ -122,12 +128,7 @@ const QuestionSection = ({ duration }) => {
             <Typography variant="h4">Your score: {count}</Typography>
           </Message>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button
-              color="primary"
-              variant="contained"
-              style={{ marginTop: 10 }}
-              onClick={() => setTime(duration)}
-            >
+            <Button color="primary" variant="contained" style={{ marginTop: 10 }} onClick={replay}>
               <Typography variant="h6">REPLAY</Typography>
             </Button>
           </div>

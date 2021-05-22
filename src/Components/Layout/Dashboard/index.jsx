@@ -7,7 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Container } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import Timer from '../../Quiz/Timer';
 import QuestionSection from '../../Quiz/QuestionSection';
 import './style.css';
@@ -62,24 +62,26 @@ function SimpleCard() {
   });
 
   return (
-    <Card className={[classes.root, 'dashboard-background']}>
-      <CardContent>
-        {loading ? (
-          <Skeleton variant="rect" width="100%" height="20%">
-            <div style={{ paddingTop: '10%' }} />
-          </Skeleton>
-        ) : (
-          // <img
-          //   src="https://i.pinimg.com/originals/5a/bf/93/5abf939069cc0ae4633e9b1670f11ed5.jpg"
-          //   width="300"
-          //   height="400"
-          //   alt=""
-          // />
-          <QuestionSection duration={5 * 60} />
-        )}
-      </CardContent>
+    <Grid container>
+      <Grid item md={12}>
+        <Card className="dashboard-background container">
+          <CardContent>
+            {loading ? (
+              <Skeleton variant="rect" width="100%" height="20%">
+                <div style={{ paddingTop: '10%' }} />
+              </Skeleton>
+            ) : (
+              // <img
+              //   src="https://i.pinimg.com/originals/5a/bf/93/5abf939069cc0ae4633e9b1670f11ed5.jpg"
+              //   width="300"
+              //   height="400"
+              //   alt=""
+              // />
+              <QuestionSection duration={5 * 60} />
+            )}
+          </CardContent>
 
-      {/* <CardContent style={{ height: '75%' }}>
+          {/* <CardContent style={{ height: '75%' }}>
         {loading ? (
           <Skeleton variant="rect" width="100%" height="100%">
             <div style={{ paddingTop: '10%' }} />
@@ -93,6 +95,8 @@ function SimpleCard() {
           />
         )}
       </CardContent> */}
-    </Card>
+        </Card>
+      </Grid>
+    </Grid>
   );
 }
