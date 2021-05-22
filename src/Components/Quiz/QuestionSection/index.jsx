@@ -80,13 +80,13 @@ const QuestionSection = ({ duration }) => {
           <Timer duration={duration} updateDuration={(remainingTime) => setTime(remainingTime)} />
           <Message>
             <Grid>
-              <Typography variant="h3" display="inline">
+              <Typography variant="h3" display="inline" style={{ padding: 5 }}>
                 {numberOne}
               </Typography>
-              <Typography variant="h3" display="inline">
+              <Typography variant="h3" display="inline" style={{ padding: 5 }}>
                 +
               </Typography>
-              <Typography variant="h3" display="inline">
+              <Typography variant="h3" display="inline" style={{ padding: 5 }}>
                 <TextField
                   multiline={false}
                   rowsMax={1}
@@ -104,10 +104,10 @@ const QuestionSection = ({ duration }) => {
                   onChange={(event) => isValidMove(event)}
                 />
               </Typography>
-              <Typography variant="h3" display="inline">
+              <Typography variant="h3" display="inline" style={{ padding: 5 }}>
                 =
               </Typography>
-              <Typography variant="h3" display="inline">
+              <Typography variant="h3" display="inline" style={{ padding: 5 }}>
                 {numberThree}
               </Typography>
             </Grid>

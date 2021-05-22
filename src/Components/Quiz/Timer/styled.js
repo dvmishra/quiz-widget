@@ -1,4 +1,9 @@
-import styled from 'styled-components';
+import { shake } from 'react-animations';
+import styled, { keyframes } from 'styled-components';
+
+export const ShakeAnimate = styled.div`
+  animation: 1.5s ${keyframes`${shake}`} 2;
+`;
 
 export const TimeContainer = styled.h3`
   padding: 4px;
@@ -7,9 +12,9 @@ export const TimeContainer = styled.h3`
   text-align: center;
   border-radius: 0%;
   font-size: 36px;
-  border: 1px solid black;
+  border: ${(props) => `1px solid ${props.background}`};
   font-family: 'Open Sans', sans-serif;
-  background: black;
+  background: ${(props) => props.background};
   color: white;
   border-radius: 12px;
   right: 10px;

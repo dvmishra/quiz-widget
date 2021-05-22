@@ -5,7 +5,7 @@ import momentDurationFormatSetup from 'moment-duration-format';
 import Card from '@material-ui/core/Card';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
-import { TimeContainer } from './styled';
+import { TimeContainer, ShakeAnimate } from './styled';
 
 momentDurationFormatSetup(moment);
 const useStyles = makeStyles({
@@ -20,7 +20,7 @@ const Timer = ({ duration, updateDuration }) => {
   const classes = useStyles();
   const [progress, setProgress] = React.useState(100);
   const [time, setTime] = useState(duration);
-  const [progressColor, setProgressColor] = useState('green');
+  const [timerColor, setTimerColor] = useState('#2962ff');
   const factor = Math.floor(duration / 100);
   useEffect(() => {
     const id = setInterval(() => {
@@ -37,9 +37,8 @@ const Timer = ({ duration, updateDuration }) => {
   }, [time]);
 
   const changeColor = () => {
-    if (time === Math.round(duration / 2)) setProgressColor('yellow');
-    else if (time === 60) setProgressColor('red');
-    else setProgressColor('green');
+    if (time === Math.round(duration / 2)) setTimerColor('darkorange');
+    else if (time === 60) setTimerColor('#dd2c00');
   };
 
   const displayTime = () => moment.duration(time, 'seconds').format('hh:mm:ss');
@@ -47,17 +46,12 @@ const Timer = ({ duration, updateDuration }) => {
   return (
     <>
       <div className={classes.root}>
-        <LinearProgress
-          variant="determinate"
-          value={progress}
-          classes={{ colorPrimary: progressColor }}
-          style={{ height: '5px' }}
-        />
+        <LinearProgress variant="determinate" value={progress} style={{ height: '5px' }} />
       </div>
       <div
         style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', zIndex: '10' }}
       >
-        <TimeContainer>{displayTime()}</TimeContainer>
+        <TimeContainer background={timerColor}>{displayTime()}</TimeContainer>
       </div>
     </>
   );
