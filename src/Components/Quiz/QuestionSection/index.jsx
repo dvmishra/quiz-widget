@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, Grid, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Timer from '../Timer';
-import Dashboard from '../../Introduction';
 import CourseHeader from '../CourseHeader';
 import Message from '../Message';
+import { FadeInUpAnimate, SlideInRightAnimate } from './styled';
 
 const useStyles = makeStyles({
   root: {
@@ -72,9 +72,9 @@ const QuestionSection = ({ duration }) => {
 
   return (
     <>
-      <CourseHeader heading={'Course Introduction'} />
+      <CourseHeader heading="Course Introduction" />
       {time > 0 ? (
-        <>
+        <FadeInUpAnimate>
           <Timer duration={duration} updateDuration={(remainingTime) => setTime(remainingTime)} />
           <Card
             style={{
@@ -119,16 +119,26 @@ const QuestionSection = ({ duration }) => {
               </Typography>
             </Grid>
           </Card>
-        </>
+        </FadeInUpAnimate>
       ) : (
-        <>
+        <SlideInRightAnimate>
           <Message>
             <Typography variant="h3" display="inline">
               Game Over
             </Typography>
             <Typography variant="h4">Your score: {count}</Typography>
           </Message>
-        </>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button
+              color="primary"
+              variant="contained"
+              style={{ marginTop: 10 }}
+              onClick={() => setTime(duration)}
+            >
+              <Typography variant="h6">REPLAY</Typography>
+            </Button>
+          </div>
+        </SlideInRightAnimate>
       )}
     </>
   );
