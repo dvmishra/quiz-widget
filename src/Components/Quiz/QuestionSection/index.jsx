@@ -83,7 +83,7 @@ const QuestionSection = ({ duration }) => {
       <CourseHeader heading="Course Introduction" />
       {time > 0 ? (
         <FadeInUpAnimate>
-          <Timer duration={10} updateDuration={(remainingTime) => setTime(remainingTime)} />
+          <Timer duration={duration} updateDuration={(remainingTime) => setTime(remainingTime)} />
           <Message className="question-section">
             <Grid>
               <Typography variant="h3" display="inline" style={{ padding: 5 }}>
