@@ -1,7 +1,7 @@
 import { Card } from '@material-ui/core';
 import React from 'react';
 
-const Message = ({ children }) => (
+const Message = ({ children, className }) => (
   <Card
     style={{
       padding: '50px',
@@ -11,6 +11,7 @@ const Message = ({ children }) => (
       background: 'transparent',
       backdropFilter: 'blur(4px)',
     }}
+    className={className}
   >
     {children}
   </Card>

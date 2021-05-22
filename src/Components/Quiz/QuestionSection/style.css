@@ -1,0 +1,9 @@
+.question-section {
+  padding: 50px !important;
+}
+
+@media only screen and (max-width: 905px) {
+  .question-section {
+    padding: 50px 0 50px 0 !important;
+  }
+}

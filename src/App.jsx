@@ -4,7 +4,6 @@ import { Dashboard } from './Components/Layout/Dashboard';
 import Quiz from './Components/Quiz/Quiz';
 import './style.css';
 
-
 export default function App({ domElement }) {
   const title = domElement.getAttribute('data-title');
   const course = domElement.getAttribute('data-course');
