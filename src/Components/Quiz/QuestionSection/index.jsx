@@ -65,6 +65,7 @@ const myPercentile = (score) => {
   for (let i = 0; i < percentileTenth.length; i += 1) {
     if (Number(score) > percentileTenth[i]) {
       myPercentileStartRange = i;
+      break;
     }
   }
 
