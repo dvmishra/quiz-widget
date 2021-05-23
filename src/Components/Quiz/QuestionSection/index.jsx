@@ -61,20 +61,25 @@ for (let i = 0; i <= 100; i += 10) {
 
 const myPercentile = (score) => {
 
-  let myPercentileStartRange = Number(0);
-  for (let i = 0; i < percentileTenth.length-1; i += 1) {
-    if (Number(score) > percentileTenth[i]) {
-      myPercentileStartRange = i;
+  let myPercentileEndRange = Number(percentileTenth.length-1);
+  for (let i = 1; i < percentileTenth.length; i += 1) {
+    if (Number(score) < percentileTenth[i]) {
+      myPercentileEndRange = i;
       break;
     }
   }
 
-  let myPrectileEndRange = myPercentileStartRange + 1;
+  let myPercentileStartRange = myPercentileEndRange - 1;
+
+  console.log(myPercentileStartRange);
+  console.log(myPercentileEndRange);
+
   const myPercentileValue = ((myPercentileStartRange*10) +
-  ((percentileTenth[myPrectileEndRange] - percentileTenth[myPercentileStartRange] + 1))
-  /(score - percentileTenth[myPercentileStartRange])).toFixed(2);
-  return  myPercentileValue > 0 ? myPercentileValue : 0;
+  ((score - percentileTenth[myPercentileStartRange] + 1)
+  /(percentileTenth[myPercentileEndRange] - percentileTenth[myPercentileStartRange] + 1)) * 10 ).toFixed(2);
+  return  myPercentileValue < 0 ? 0 : myPercentileValue > 100 ? 100 : myPercentileValue;
 }
+
 
 const QuestionSection = ({ duration }) => {
   const classes = useStyles();
