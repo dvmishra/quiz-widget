@@ -16,6 +16,65 @@ const useStyles = makeStyles({
   },
 });
 
+const frequency = [{ score: "24", freq: "5" }, { score: "36", freq: "9" },
+{ score: "41", freq: "12" }, { score: "57", freq: "6" }, { score: "62", freq: "8" },
+{ score: "68", freq: "5" }, { score: "72", freq: "14" }, { score: "81", freq: "5" },
+{ score: "93", freq: "3" }]
+
+let countValue = frequency.reduce((countValues, obj) => countValues += Number(obj.freq), 0);
+
+
+const sortedNth = (frequencyMap, n) => {
+
+  let bucketStartIndex = 0;
+  let keys = [];
+  frequency.forEach((arrayItem) => {
+    keys.push(Number(arrayItem.score));
+  });
+
+  let values = [];
+  frequency.forEach((arrayItem) => {
+    values.push(Number(arrayItem.freq));
+  });
+
+  for (let i = 0; i < keys.length; i += 1) {
+    let currentFrequency = values[i];
+    let bucketEndIndex = bucketStartIndex + currentFrequency;
+    if (n < bucketEndIndex) {
+      return keys[i];
+    }
+    bucketStartIndex = bucketEndIndex;
+  }
+
+  return keys[keys.length - 1];
+}
+
+const kthPercentile = (valueFrequencies, k) => {
+  const index = (k / 100) * countValue;
+  return sortedNth(valueFrequencies, Math.floor(index));
+};
+
+let percentileTenth = [];
+for (let i = 0; i <= 100; i += 10) {
+  percentileTenth.push(Number(kthPercentile(frequency, i)));
+}
+
+const myPercentile = (score) => {
+
+  let myPercentileStartRange = Number(0);
+  for (let i = 0; i < percentileTenth.length; i += 1) {
+    if (Number(score) > percentileTenth[i]) {
+      myPercentileStartRange = i;
+    }
+  }
+
+  let myPrectileEndRange = myPercentileStartRange + 1;
+  const myPercentileValue = ((myPercentileStartRange*10) +
+  ((percentileTenth[myPrectileEndRange] - percentileTenth[myPercentileStartRange] + 1))
+  /(score - percentileTenth[myPercentileStartRange])).toFixed(2);
+  return  myPercentileValue > 0 ? myPercentileValue : 0;
+}
+
 const QuestionSection = ({ duration }) => {
   const classes = useStyles();
   const [numberOne, setNumberOne] = useState(0);
@@ -25,6 +84,7 @@ const QuestionSection = ({ duration }) => {
   const [error, setError] = useState(false);
   const [time, setTime] = useState(duration);
   const [count, setCount] = useState(0);
+  const [percentile, setPercentile] = useState(0);
 
   const genrateValues = () => {
     const answers = [10, 100, 1000];
@@ -70,6 +130,7 @@ const QuestionSection = ({ duration }) => {
       }, 500);
       setError(false);
       setCount(count + 1);
+      setPercentile(myPercentile(count));
     }
   };
 
@@ -127,6 +188,7 @@ const QuestionSection = ({ duration }) => {
               Game Over
             </Typography>
             <Typography variant="h4">Your score: {count}</Typography>
+            <Typography variant="h4">Your percentile score is : {percentile}. You were compared against score of {countValue} peers.</Typography>
           </Message>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Button color="primary" variant="contained" style={{ marginTop: 10 }} onClick={replay}>
