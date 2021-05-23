@@ -70,10 +70,6 @@ const myPercentile = (score) => {
   }
 
   let myPercentileStartRange = myPercentileEndRange - 1;
-
-  console.log(myPercentileStartRange);
-  console.log(myPercentileEndRange);
-
   const myPercentileValue = ((myPercentileStartRange*10) +
   ((score - percentileTenth[myPercentileStartRange] + 1)
   /(percentileTenth[myPercentileEndRange] - percentileTenth[myPercentileStartRange] + 1)) * 10 ).toFixed(2);
