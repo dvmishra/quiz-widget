@@ -6,6 +6,8 @@ import CourseHeader from '../CourseHeader';
 import Message from '../Message';
 import { FadeInUpAnimate, SlideInRightAnimate } from './styled';
 import "./style.css";
+import Spinner from '../Spinner';
+import SetTimer from '../Timer/Timer';
 
 const useStyles = makeStyles({
   root: {
@@ -14,6 +16,25 @@ const useStyles = makeStyles({
       fontSize: '3rem',
     },
   },
+  currentScore : {
+    position: 'absolute',
+    float: 'left',
+    top: 0,
+    left: 0,
+    width: 50,
+    height: 50,
+    backgroundColor: 'red',
+    borderBottomRightRadius: 50
+  },
+  currentScoreText : {
+    textAlign: 'left',
+    justifyContent: 'center',
+    paddingTop: 10,
+    paddingLeft: 10,
+    color: 'white',
+    fontWeight: 700
+  }
+
 });
 
 const frequency = [{ score: "24", freq: "5" }, { score: "36", freq: "9" },
@@ -61,7 +82,7 @@ for (let i = 0; i <= 100; i += 10) {
 
 const myPercentile = (score) => {
 
-  let myPercentileEndRange = Number(percentileTenth.length-1);
+  let myPercentileEndRange = Number(percentileTenth.length - 1);
   for (let i = 1; i < percentileTenth.length; i += 1) {
     if (Number(score) < percentileTenth[i]) {
       myPercentileEndRange = i;
@@ -70,10 +91,11 @@ const myPercentile = (score) => {
   }
 
   let myPercentileStartRange = myPercentileEndRange - 1;
-  const myPercentileValue = ((myPercentileStartRange*10) +
-  ((score - percentileTenth[myPercentileStartRange] + 1)
-  /(percentileTenth[myPercentileEndRange] - percentileTenth[myPercentileStartRange] + 1)) * 10 ).toFixed(2);
-  return  myPercentileValue < 0 ? 0 : myPercentileValue > 100 ? 100 : myPercentileValue;
+
+  const myPercentileValue = ((myPercentileStartRange * 10) +
+    ((score - percentileTenth[myPercentileStartRange] + 1)
+      / (percentileTenth[myPercentileEndRange] - percentileTenth[myPercentileStartRange] + 1)) * 10).toFixed(2);
+  return myPercentileValue < 0 ? 0 : myPercentileValue > 100 ? 100 : myPercentileValue;
 }
 
 
@@ -87,6 +109,7 @@ const QuestionSection = ({ duration }) => {
   const [time, setTime] = useState(duration);
   const [count, setCount] = useState(0);
   const [percentile, setPercentile] = useState(0);
+  const [isIntroduction, setIsIntroduction] = useState(true);
 
   const genrateValues = () => {
     const answers = [10, 100, 1000];
@@ -139,15 +162,46 @@ const QuestionSection = ({ duration }) => {
   const replay = () => {
     setTime(duration);
     setResponse('');
+    setCount(0);
   };
+
+  const moveToGame = () => {
+    setIsIntroduction(false);
+  };
+
+  const setGameTime = (time) => {
+    setTime(time)
+  }
 
   return (
     <>
       <CourseHeader heading="Course Introduction" />
-      {time > 0 ? (
+      
+      { isIntroduction ? (<> 
+        
+        <SlideInRightAnimate>
+          <Message>
+            <Typography variant="h3" display="inline">
+              Rules for the game
+            </Typography>
+            <Typography variant="h4">Point 1</Typography>
+            <Typography variant="h4">Point 2.</Typography>
+          </Message>
+          <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
+            <SetTimer setTime={setGameTime} />
+            <Button color="primary" variant="contained" style={{ marginTop: 10 }} onClick={moveToGame}>
+              <Typography variant="h6">Let's Go</Typography>
+            </Button>
+          </div>
+        </SlideInRightAnimate>
+      
+      </>) : time > 0 ? (
         <FadeInUpAnimate>
-          <Timer duration={duration} updateDuration={(remainingTime) => setTime(remainingTime)} />
+          <Timer duration={time} updateDuration={(remainingTime) => setTime(remainingTime)} />
           <Message className="question-section">
+          <div className={classes.currentScore}>
+                <div className={classes.currentScoreText}> {count}  </div> 
+              </div>
             <Grid>
               <Typography variant="h3" display="inline" style={{ padding: 5 }}>
                 {numberOne}
@@ -185,6 +239,7 @@ const QuestionSection = ({ duration }) => {
         </FadeInUpAnimate>
       ) : (
         <SlideInRightAnimate>
+          <Spinner percentile={percentile}/>
           <Message>
             <Typography variant="h3" display="inline">
               Game Over
@@ -198,7 +253,7 @@ const QuestionSection = ({ duration }) => {
             </Button>
           </div>
         </SlideInRightAnimate>
-      )}
+      )} 
     </>
   );
 };

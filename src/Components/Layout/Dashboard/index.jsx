@@ -77,7 +77,7 @@ function SimpleCard() {
               //   height="400"
               //   alt=""
               // />
-              <QuestionSection duration={5 * 60} />
+              <QuestionSection duration={5} />
             )}
           </CardContent>
 
