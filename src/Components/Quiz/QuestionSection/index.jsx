@@ -119,6 +119,7 @@ const QuestionSection = ({ duration }) => {
   const [game, setGame] = useState(false);
 
   let startTime = new Date().toISOString();
+  let gameDuration = '';
   const { user, setUser } = useContext(UserContext);
   const genrateValues = () => {
     const answers = [10, 100, 1000];
@@ -150,9 +151,10 @@ const QuestionSection = ({ duration }) => {
     genrateValues();
   }, []);
 
-  // updateUserScore = () => {
-  //   user.game.push[{}];
-  // };
+  const updateUserScore = () => {
+    user.games.push({ duration: time, startTime: startTime, score: count });
+    setUser(user);
+  };
 
   const isValidMove = (event) => {
     const input = Number(event.target.value);
@@ -173,6 +175,8 @@ const QuestionSection = ({ duration }) => {
   };
 
   const replay = () => {
+    startTime = new Date().toISOString();
+    updateUserScore();
     setResponse('');
     setCount(0);
     setGame(true);
@@ -186,6 +190,8 @@ const QuestionSection = ({ duration }) => {
 
   const setGameTime = (time) => {
     setTime(time);
+    gameDuration = time;
+    console.log(gameDuration);
   };
 
   return (
@@ -276,6 +282,18 @@ const QuestionSection = ({ duration }) => {
             <Typography variant="h4">
               Your percentile score is : {percentile}. You were compared against score of{' '}
               {countValue} peers.
+            </Typography>
+            <Typography variant="h5">
+              Your previous scores:
+              <div style={{ height: '150px', overflowY: 'auto' }}>
+                  {user.games.map((game) => {
+                    return (
+                      <li>
+                        Duration: {Number(game.duration) / 60}, Score: {game.score}
+                      </li>
+                    );
+                  })}
+              </div>
             </Typography>
           </Message>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
