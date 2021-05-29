@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -40,15 +40,25 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-export default function CustomizedMenus( {setTime }) {
+export default function DurationMenu({ setTime }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const [duration, setDuration] = React.useState('300');
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  useEffect(() => {
+    setTime(duration);
+  }, [duration]);
+
+  const handleItemClick = (event) => {
+    setAnchorEl(null);
+    const { duration } = event.currentTarget.dataset;
+    setDuration(duration);
   };
 
   return (
@@ -61,7 +71,7 @@ export default function CustomizedMenus( {setTime }) {
         onClick={handleClick}
         style={{ marginTop: 10 }}
       >
-        Choose Timing : 5 mins
+        Choose Timing : {Number(duration) / 60} mins
       </Button>
       <StyledMenu
         id="customized-menu"
@@ -69,21 +79,20 @@ export default function CustomizedMenus( {setTime }) {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
-        onClick={event => console.log(event)}
       >
-        <StyledMenuItem value='60'  onClick={event => console.log(event.target.value)} > 
+        <StyledMenuItem data-duration="60" onClick={handleItemClick} selected={duration === '60'}>
           <ListItemIcon>
             <SendIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="1 min" />
         </StyledMenuItem>
-        <StyledMenuItem value='180'  onClick={event => console.log(event.target.value)}>
+        <StyledMenuItem data-duration="180" onClick={handleItemClick} selected={duration === '180'}>
           <ListItemIcon>
             <DraftsIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="3 min" />
         </StyledMenuItem>
-        <StyledMenuItem value='300'  onClick={event => console.log(event.target.value)}>
+        <StyledMenuItem data-duration="300" onClick={handleItemClick} selected={duration === '300'}>
           <ListItemIcon>
             <InboxIcon fontSize="small" />
           </ListItemIcon>
