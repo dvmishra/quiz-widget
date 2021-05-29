@@ -12,6 +12,8 @@ import Timer from '../../Quiz/Timer';
 import QuestionSection from '../../Quiz/QuestionSection';
 import './style.css';
 
+const DurationContext = React.createContext('300');
+
 export const Dashboard = (props) => {
   return (
     <Paper variant="outlined" style={{ display: 'flex', flexDirection: 'row' }}>
