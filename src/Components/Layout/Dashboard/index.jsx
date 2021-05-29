@@ -11,13 +11,15 @@ import { Container, Grid } from '@material-ui/core';
 import Timer from '../../Quiz/Timer';
 import QuestionSection from '../../Quiz/QuestionSection';
 import './style.css';
-
-const DurationContext = React.createContext('300');
+import { UserContext, userData } from './UserContext';
 
 export const Dashboard = (props) => {
+  const [user, setUser] = useState(userData);
   return (
     <Paper variant="outlined" style={{ display: 'flex', flexDirection: 'row' }}>
-      <SimpleCard />
+      <UserContext.Provider value={{ user, setUser }}>
+        <SimpleCard />
+      </UserContext.Provider>
       {/* <Skeleton variant="rect" width={210} height={118} /> */}
     </Paper>
   );

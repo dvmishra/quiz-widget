@@ -51,14 +51,15 @@ export default function DurationMenu({ setTime }) {
     setAnchorEl(null);
   };
 
-  useEffect(() => {
-    setTime(duration);
-  }, [duration]);
+  // useEffect(() => {
+  //   setTime(duration);
+  // }, [duration]);
 
   const handleItemClick = (event) => {
     setAnchorEl(null);
     const { duration } = event.currentTarget.dataset;
     setDuration(duration);
+    setTime(duration);
   };
 
   return (
