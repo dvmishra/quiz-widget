@@ -12,7 +12,7 @@ import Timer from '../../Quiz/Timer';
 import QuestionSection from '../../Quiz/QuestionSection';
 import './style.css';
 
-// const DurationContext = React.createContext('300');
+const DurationContext = React.createContext('300');
 
 export const Dashboard = (props) => {
   return (
