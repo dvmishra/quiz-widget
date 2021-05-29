@@ -7,3 +7,46 @@
     padding: 50px 0 50px 0 !important;
   }
 }
+
+.emoji::after {
+  font-size: 4em;
+  min-width: 1.4em;
+  margin: 0.3em 0.4em;
+  text-align: center;
+}
+
+.question::after {
+  content: '❓';
+  animation-name: question;
+  animation-duration: 2s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+}
+
+@keyframes question {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(1.1, 1.1) translateY(30px);
+  }
+  30% {
+    transform:  scale(1.2, 1.2) translateY(0);
+  }
+  50% {
+    transform:  scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  font-size: 4em;
+  position: absolute;
+  animation: question 2.5s infinite;
+  animation-timing-function: ease;
+}
+

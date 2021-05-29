@@ -45,9 +45,9 @@ const Timer = ({ duration, updateDuration }) => {
 
   return (
     <>
-      <div className={classes.root}>
+      {/* <div className={classes.root}>
         <LinearProgress variant="determinate" value={progress} style={{ height: '5px' }} />
-      </div>
+      </div> */}
       <div
         style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', zIndex: '10' }}
       >

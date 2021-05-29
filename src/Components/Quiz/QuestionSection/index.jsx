@@ -112,7 +112,7 @@ const QuestionSection = ({ duration }) => {
   const [numberThree, setNumberThree] = useState(0);
   const [response, setResponse] = useState('');
   const [error, setError] = useState(false);
-  const [time, setTime] = useState(duration);
+  const [time, setTime] = useState(300);
   const [count, setCount] = useState(0);
   const [percentile, setPercentile] = useState(0);
   const [isIntroduction, setIsIntroduction] = useState(true);
@@ -223,6 +223,8 @@ const QuestionSection = ({ duration }) => {
         </>
       ) : game === true ? (
         <FadeInUpAnimate>
+          {/* <span class="emoji question" role="img" aria-label="question"></span> */}
+          <div class="box">❓</div>
           <Timer
             duration={time}
             updateDuration={(remainingTime) => {
@@ -286,13 +288,13 @@ const QuestionSection = ({ duration }) => {
             <Typography variant="h5">
               Your previous scores:
               <div style={{ height: '150px', overflowY: 'auto' }}>
-                  {user.games.map((game) => {
-                    return (
-                      <li>
-                        Duration: {Number(game.duration) / 60}, Score: {game.score}
-                      </li>
-                    );
-                  })}
+                {user.games.map((game) => {
+                  return (
+                    <li>
+                      Duration: {Number(game.duration) / 60}, Score: {game.score}
+                    </li>
+                  );
+                })}
               </div>
             </Typography>
           </Message>

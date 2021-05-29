@@ -3,7 +3,7 @@ import './style.css';
 import { SpinnerAnimation } from './styled';
 import above_average from './images/above_average.png';
 
-const Spinner = (percentile) => {
+const Spinner = ({ percentile }) => {
   useEffect(() => {
     const startSpinnerBtn = document.getElementById('startSpinner');
 
