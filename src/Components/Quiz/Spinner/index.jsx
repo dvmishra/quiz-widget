@@ -24,7 +24,7 @@ const Spinner = ({ percentile }) => {
 
   return (
     <>
-      <div className="container">
+      {/* <div className="container"> */}
         <div className="spinner" id="spinnerContainer">
           <ul className="spinner-items" id="spinnerList">
             <li className="spinner-items__item" id="8">
@@ -61,7 +61,7 @@ const Spinner = ({ percentile }) => {
         </div>
         <div className="spinner__won" id="spinnerWon"></div>
         {/* <div className="button" id="startSpinner">Spin Emoji!</div> */}
-      </div>
+      {/* </div> */}
     </>
   );
 };

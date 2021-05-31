@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -70,9 +71,9 @@ export default function DurationMenu({ setTime }) {
         variant="contained"
         color="primary"
         onClick={handleClick}
-        style={{ marginTop: 10 }}
+        style={{ marginTop: 10, width: '100%' }}
       >
-        Choose Timing : {Number(duration) / 60} mins
+        <Typography variant="h6">Choose Timing : {Number(duration) / 60} mins</Typography>
       </Button>
       <StyledMenu
         id="customized-menu"

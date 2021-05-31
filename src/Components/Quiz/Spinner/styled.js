@@ -78,7 +78,7 @@ export class SpinnerAnimation {
       last = ct;
 
       // Move the item to the left
-      this.spinnerList.style.right = this.offSet + "px";
+      // this.spinnerList.style.right = this.offSet + "px";
 
       if (this.offSet >= 122) {
         this.recycle = true;

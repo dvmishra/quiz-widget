@@ -13,8 +13,8 @@
 }
 
 .spinner {
-  max-width: 610px;
-  min-width: 610px;
+  /* max-width: 610px; */
+  /* min-width: 610px; */
   border-top: 5px solid black;
   border-bottom: 5px solid black;
 }
@@ -52,7 +52,7 @@
   font-size: 32px;
   color: #c2c2c2;
   border-left: 5px solid black;
-  width: 117px;
+  /* width: 117px; */
   max-width: 117px;
   overflow: hidden;
   text-align: center;

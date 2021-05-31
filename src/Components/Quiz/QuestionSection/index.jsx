@@ -105,6 +105,8 @@ const myPercentile = (score) => {
   return myPercentileValue < 0 ? 0 : myPercentileValue > 100 ? 100 : myPercentileValue;
 };
 
+let allValues = {};
+
 const QuestionSection = ({ duration }) => {
   const classes = useStyles();
   const [numberOne, setNumberOne] = useState(0);
@@ -121,24 +123,24 @@ const QuestionSection = ({ duration }) => {
   let startTime = new Date().toISOString();
   let gameDuration = '';
   const { user, setUser } = useContext(UserContext);
+
+  const generateUniqueRandomNumber = (limit) => {
+    let number = 0;
+    if (limit === 10) number = Math.round(Math.random() * 9);
+    else if (limit === 100) number = 10 + Math.round(Math.random() * 89);
+    else number = 100 + Math.round(Math.random() * 899);
+    if (number in allValues) {
+      generateUniqueRandomNumber(limit);
+    }
+    allValues = { ...allValues, [number]: 0 };
+    return number;
+  };
+
   const genrateValues = () => {
     const answers = [10, 100, 1000];
     const answer = answers[Math.floor(Math.random() * answers.length)];
 
-    let number1 = 0;
-    switch (answer) {
-      case 10:
-        number1 = Math.round(Math.random() * 9);
-        break;
-      case 100:
-        number1 = 10 + Math.round(Math.random() * 89);
-        break;
-      case 1000:
-        number1 = 100 + Math.round(Math.random() * 899);
-        break;
-      default:
-        number1 = Math.round(Math.random() * 10);
-    }
+    const number1 = generateUniqueRandomNumber(answer);
 
     const number2 = answer - number1;
 
@@ -180,6 +182,8 @@ const QuestionSection = ({ duration }) => {
     setResponse('');
     setCount(0);
     setGame(true);
+    allValues = {};
+    setError(false);
   };
 
   const moveToGame = () => {
@@ -208,7 +212,7 @@ const QuestionSection = ({ duration }) => {
               <Typography variant="h4">Point 1</Typography>
               <Typography variant="h4">Point 2.</Typography>
             </Message>
-            <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
+            <div className="start-game-container">
               <SetTimer setTime={setGameTime} />
               <Button
                 color="primary"
@@ -223,7 +227,6 @@ const QuestionSection = ({ duration }) => {
         </>
       ) : game === true ? (
         <FadeInUpAnimate>
-          {/* <span class="emoji question" role="img" aria-label="question"></span> */}
           <div class="box">❓</div>
           <Timer
             duration={time}
@@ -275,8 +278,8 @@ const QuestionSection = ({ duration }) => {
         </FadeInUpAnimate>
       ) : (
         <SlideInRightAnimate>
-          <Spinner percentile={percentile} />
           <Message>
+            {/* <Spinner percentile={percentile} /> */}
             <Typography variant="h3" display="inline">
               Game Over
             </Typography>
@@ -285,20 +288,22 @@ const QuestionSection = ({ duration }) => {
               Your percentile score is : {percentile}. You were compared against score of{' '}
               {countValue} peers.
             </Typography>
-            <Typography variant="h5">
-              Your previous scores:
-              <div style={{ height: '150px', overflowY: 'auto' }}>
-                {user.games.map((game) => {
-                  return (
-                    <li>
-                      Duration: {Number(game.duration) / 60}, Score: {game.score}
-                    </li>
-                  );
-                })}
-              </div>
-            </Typography>
+            {user.games.length > 0 && (
+              <Typography variant="h5">
+                Your previous scores:
+                <div style={{ height: '150px', overflowY: 'auto' }}>
+                  {user.games.map((game) => {
+                    return (
+                      <li>
+                        Duration: {Number(game.duration) / 60}, Score: {game.score}
+                      </li>
+                    );
+                  })}
+                </div>
+              </Typography>
+            )}
           </Message>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="start-game-container">
             <SetTimer setTime={setGameTime} />
             <Button color="primary" variant="contained" style={{ marginTop: 10 }} onClick={replay}>
               <Typography variant="h6">REPLAY</Typography>
