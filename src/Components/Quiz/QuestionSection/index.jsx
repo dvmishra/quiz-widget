@@ -115,13 +115,13 @@ const QuestionSection = ({ duration }) => {
   const [response, setResponse] = useState('');
   const [error, setError] = useState(false);
   const [time, setTime] = useState(300);
+  const [gameDuration, setGameDuraion] = useState();
   const [count, setCount] = useState(0);
   const [percentile, setPercentile] = useState(0);
   const [isIntroduction, setIsIntroduction] = useState(true);
   const [game, setGame] = useState(false);
 
   let startTime = new Date().toISOString();
-  let gameDuration = '';
   const { user, setUser } = useContext(UserContext);
 
   const generateUniqueRandomNumber = (limit) => {
@@ -130,6 +130,8 @@ const QuestionSection = ({ duration }) => {
     else if (limit === 100) number = 10 + Math.round(Math.random() * 89);
     else number = 100 + Math.round(Math.random() * 899);
     if (number in allValues) {
+      const answers = [10, 100, 1000];
+      limit = answers[Math.floor(Math.random() * answers.length)];
       generateUniqueRandomNumber(limit);
     }
     allValues = { ...allValues, [number]: 0 };
@@ -150,13 +152,25 @@ const QuestionSection = ({ duration }) => {
   };
 
   useEffect(() => {
+    window.onbeforeunload = (event) => {
+      const e = event || window.event;
+      e.preventDefault();
+      if (game) {
+        if (e) {
+          e.returnValue = '';
+        }
+        return '';
+      }
+    };
     genrateValues();
   }, []);
 
-  const updateUserScore = () => {
-    user.games.push({ duration: time, startTime: startTime, score: count });
-    setUser(user);
-  };
+  useEffect(() => {
+    if (game) {
+      user.games.push({ duration: gameDuration, startTime: startTime, score: count });
+      setUser(user);
+    }
+  }, [game]);
 
   const isValidMove = (event) => {
     const input = Number(event.target.value);
@@ -178,7 +192,8 @@ const QuestionSection = ({ duration }) => {
 
   const replay = () => {
     startTime = new Date().toISOString();
-    updateUserScore();
+    user.games[user.games.length - 1] = { ...user.games[user.games.length - 1], score: count };
+    setUser(user);
     setResponse('');
     setCount(0);
     setGame(true);
@@ -194,8 +209,7 @@ const QuestionSection = ({ duration }) => {
 
   const setGameTime = (time) => {
     setTime(time);
-    gameDuration = time;
-    console.log(gameDuration);
+    setGameDuraion(time);
   };
 
   return (
@@ -229,7 +243,7 @@ const QuestionSection = ({ duration }) => {
         <FadeInUpAnimate>
           <div class="box">❓</div>
           <Timer
-            duration={time}
+            duration={gameDuration}
             updateDuration={(remainingTime) => {
               setTime(remainingTime);
               if (remainingTime <= 0) {
