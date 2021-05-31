@@ -168,7 +168,6 @@ const QuestionSection = ({ duration }) => {
   useEffect(() => {
     if (game) {
       user.games.push({ duration: gameDuration, startTime: startTime, score: count });
-      setUser(user);
     }
   }, [game]);
 
