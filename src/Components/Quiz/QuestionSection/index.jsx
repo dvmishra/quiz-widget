@@ -14,7 +14,7 @@ import question from '../../../images/question.svg';
 import excellent from '../../../images/excellent.svg';
 import good from '../../../images/good.svg';
 import poor from '../../../images/poor.svg';
-import { generateRandomNumber } from '../../../utilities/randomNumber';
+import { Queue } from '../../../utilities/Queue';
 
 const useStyles = makeStyles({
   root: {
@@ -110,7 +110,8 @@ const myPercentile = (score) => {
   return myPercentileValue < 0 ? 0 : myPercentileValue > 100 ? 100 : myPercentileValue;
 };
 
-let allValues = {};
+const numberMap = {};
+const numberQueue = new Queue(10);
 
 const QuestionSection = ({ duration }) => {
   const classes = useStyles();
@@ -144,7 +145,36 @@ const QuestionSection = ({ duration }) => {
   };
 
   const genrateValues = () => {
-    const { number1, answer } = generateRandomNumber();
+    let answer;
+    let number1 = 0;
+    while (true) {
+      const answers = [10, 100, 1000];
+      answer = answers[Math.floor(Math.random() * answers.length)];
+      number1 = 0;
+      switch (answer) {
+        case 10:
+          number1 = Math.round(Math.random() * 9);
+          break;
+        case 100:
+          number1 = 10 + Math.round(Math.random() * 89);
+          break;
+        case 1000:
+          number1 = 100 + Math.round(Math.random() * 899);
+          break;
+      }
+      if (number1 in numberMap === false) {
+        if (!numberQueue.isFull()) {
+          numberMap[number1] = 0;
+          numberQueue.enqueue(number1);
+        } else {
+          const node = numberQueue.dequeue();
+          delete numberMap[node.value];
+          numberQueue.enqueue(number1);
+          numberMap[number1] = 0;
+        }
+        break;
+      }
+    }
     const number2 = answer - number1;
 
     setNumberThree(answer);
@@ -185,6 +215,8 @@ const QuestionSection = ({ duration }) => {
 
   const replay = () => {
     startTime = new Date().toISOString();
+    numberQueue.clear();
+    numberMap = {};
     setUser(user);
     setResponse('');
     setCount(0);
