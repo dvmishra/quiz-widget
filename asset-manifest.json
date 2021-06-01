@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/quiz-widget/static/css/main.9ee04c65.chunk.css",
-    "main.js": "/quiz-widget/static/js/main.1ed0f09e.chunk.js",
-    "main.js.map": "/quiz-widget/static/js/main.1ed0f09e.chunk.js.map",
-    "runtime-main.js": "/quiz-widget/static/js/runtime-main.7d0363af.js",
-    "runtime-main.js.map": "/quiz-widget/static/js/runtime-main.7d0363af.js.map",
-    "static/js/2.4ad50d20.chunk.js": "/quiz-widget/static/js/2.4ad50d20.chunk.js",
-    "static/js/2.4ad50d20.chunk.js.map": "/quiz-widget/static/js/2.4ad50d20.chunk.js.map",
-    "static/js/3.df1a560e.chunk.js": "/quiz-widget/static/js/3.df1a560e.chunk.js",
-    "static/js/3.df1a560e.chunk.js.map": "/quiz-widget/static/js/3.df1a560e.chunk.js.map",
+    "main.js": "/quiz-widget/static/js/main.b5854a11.chunk.js",
+    "main.js.map": "/quiz-widget/static/js/main.b5854a11.chunk.js.map",
+    "runtime-main.js": "/quiz-widget/static/js/runtime-main.d6b3cef6.js",
+    "runtime-main.js.map": "/quiz-widget/static/js/runtime-main.d6b3cef6.js.map",
+    "static/js/2.5544a1fe.chunk.js": "/quiz-widget/static/js/2.5544a1fe.chunk.js",
+    "static/js/2.5544a1fe.chunk.js.map": "/quiz-widget/static/js/2.5544a1fe.chunk.js.map",
+    "static/js/3.d9418465.chunk.js": "/quiz-widget/static/js/3.d9418465.chunk.js",
+    "static/js/3.d9418465.chunk.js.map": "/quiz-widget/static/js/3.d9418465.chunk.js.map",
     "index.html": "/quiz-widget/index.html",
     "static/css/main.9ee04c65.chunk.css.map": "/quiz-widget/static/css/main.9ee04c65.chunk.css.map",
-    "static/js/2.4ad50d20.chunk.js.LICENSE.txt": "/quiz-widget/static/js/2.4ad50d20.chunk.js.LICENSE.txt",
+    "static/js/2.5544a1fe.chunk.js.LICENSE.txt": "/quiz-widget/static/js/2.5544a1fe.chunk.js.LICENSE.txt",
     "static/media/above_average.1364f779.png": "/quiz-widget/static/media/above_average.1364f779.png",
     "static/media/style.css": "/quiz-widget/static/media/background.b06c61c9.jpg",
     "static/media/excellent.45ee39bf.svg": "/quiz-widget/static/media/excellent.45ee39bf.svg",
@@ -21,9 +21,9 @@
     "static/media/quiz_board.bbfba0b2.svg": "/quiz-widget/static/media/quiz_board.bbfba0b2.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.7d0363af.js",
-    "static/js/2.4ad50d20.chunk.js",
+    "static/js/runtime-main.d6b3cef6.js",
+    "static/js/2.5544a1fe.chunk.js",
     "static/css/main.9ee04c65.chunk.css",
-    "static/js/main.1ed0f09e.chunk.js"
+    "static/js/main.b5854a11.chunk.js"
   ]
 }
