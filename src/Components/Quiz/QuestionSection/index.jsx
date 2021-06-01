@@ -115,7 +115,7 @@ const QuestionSection = ({ duration }) => {
   const [response, setResponse] = useState('');
   const [error, setError] = useState(false);
   const [time, setTime] = useState(300);
-  const [gameDuration, setGameDuraion] = useState();
+  const [gameDuration, setGameDuraion] = useState(300);
   const [count, setCount] = useState(0);
   const [percentile, setPercentile] = useState(0);
   const [isIntroduction, setIsIntroduction] = useState(true);
@@ -190,6 +190,10 @@ const QuestionSection = ({ duration }) => {
   };
 
   const replay = () => {
+    if (time === 0) {
+      alert("Choose time")
+      return null;
+    }
     startTime = new Date().toISOString();
     user.games[user.games.length - 1] = { ...user.games[user.games.length - 1], score: count };
     setUser(user);
@@ -198,6 +202,7 @@ const QuestionSection = ({ duration }) => {
     setGame(true);
     allValues = {};
     setError(false);
+    
   };
 
   const moveToGame = () => {
@@ -240,7 +245,7 @@ const QuestionSection = ({ duration }) => {
         </>
       ) : game === true ? (
         <FadeInUpAnimate>
-          <div class="box">❓</div>
+          <div className="box">❓</div>
           <Timer
             duration={gameDuration}
             updateDuration={(remainingTime) => {
