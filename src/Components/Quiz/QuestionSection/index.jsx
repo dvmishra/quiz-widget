@@ -220,7 +220,6 @@ const QuestionSection = ({ duration }) => {
     setResponse('');
     setCount(0);
     setGame(true);
-    allValues = {};
     setError(false);
   };
 
