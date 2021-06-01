@@ -14,6 +14,7 @@ import question from '../../../images/question.svg';
 import excellent from '../../../images/excellent.svg';
 import good from '../../../images/good.svg';
 import poor from '../../../images/poor.svg';
+import { generateRandomNumber } from '../../../utilities/randomNumber';
 
 const useStyles = makeStyles({
   root: {
@@ -143,11 +144,7 @@ const QuestionSection = ({ duration }) => {
   };
 
   const genrateValues = () => {
-    const answers = [10, 100, 1000];
-    const answer = answers[Math.floor(Math.random() * answers.length)];
-
-    const number1 = generateUniqueRandomNumber(answer);
-
+    const { number1, answer } = generateRandomNumber();
     const number2 = answer - number1;
 
     setNumberThree(answer);
@@ -330,7 +327,7 @@ const QuestionSection = ({ duration }) => {
             {user.games.length > 0 && (
               <ScoreContainer>
                 <Typography variant="h5">
-                  <div style={{ borderBottom: "1px solid black" }}>Previous Scores</div>
+                  <div style={{ borderBottom: '1px solid black' }}>Previous Scores</div>
 
                   <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
                     {user.games.map((game) => {
