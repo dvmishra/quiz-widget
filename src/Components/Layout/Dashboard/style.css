@@ -30,4 +30,8 @@
   .quiz-image {
     opacity: 0.75;
   }
+
+  .question-image{
+    opacity: 0.75;
+  }
 }
