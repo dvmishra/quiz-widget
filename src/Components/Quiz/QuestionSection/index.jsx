@@ -110,7 +110,7 @@ const myPercentile = (score) => {
   return myPercentileValue < 0 ? 0 : myPercentileValue > 100 ? 100 : myPercentileValue;
 };
 
-const numberMap = {};
+let numberMap = {};
 const numberQueue = new Queue(10);
 
 const QuestionSection = ({ duration }) => {
@@ -176,7 +176,6 @@ const QuestionSection = ({ duration }) => {
       }
     }
     const number2 = answer - number1;
-
     setNumberThree(answer);
     setNumberTwo(number2);
     setNumberOne(number1);
