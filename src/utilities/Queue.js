@@ -53,4 +53,9 @@ export class Queue {
 
     return node;
   }
+
+  clear() {
+    this.front = null;
+    this.rear = null;
+  }
 }
