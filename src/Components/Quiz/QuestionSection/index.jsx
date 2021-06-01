@@ -4,13 +4,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Timer from '../Timer';
 import CourseHeader from '../CourseHeader';
 import Message from '../Message';
-import { FadeInUpAnimate, SlideInRightAnimate } from './styled';
+import { FadeInUpAnimate, SlideInRightAnimate, GameOverAnimate } from './styled';
 import './style.css';
 import Spinner from '../Spinner';
 import SetTimer from '../Timer/Timer';
 import { UserContext } from '../../Layout/Dashboard/UserContext';
 import quiz from '../../../images/quiz_board.svg';
 import question from '../../../images/question.svg';
+import excellent from '../../../images/excellent.svg';
+import good from '../../../images/good.svg';
+import poor from '../../../images/poor.svg';
 
 const useStyles = makeStyles({
   root: {
@@ -32,7 +35,6 @@ const useStyles = makeStyles({
   currentScoreText: {
     textAlign: 'left',
     justifyContent: 'center',
-    paddingTop: 10,
     paddingLeft: 10,
     color: 'white',
     fontWeight: 700,
@@ -157,12 +159,11 @@ const QuestionSection = ({ duration }) => {
     window.onbeforeunload = (event) => {
       const e = event || window.event;
       e.preventDefault();
-      if (game) {
-        if (e) {
-          e.returnValue = '';
-        }
-        return '';
+
+      if (e) {
+        e.returnValue = '';
       }
+      return '';
     };
     genrateValues();
   }, []);
@@ -192,10 +193,6 @@ const QuestionSection = ({ duration }) => {
   };
 
   const replay = () => {
-    if (time === 0) {
-      alert('Choose time');
-      return null;
-    }
     startTime = new Date().toISOString();
     user.games[user.games.length - 1] = { ...user.games[user.games.length - 1], score: count };
     setUser(user);
@@ -215,6 +212,12 @@ const QuestionSection = ({ duration }) => {
   const setGameTime = (time) => {
     setTime(time);
     setGameDuraion(time);
+  };
+
+  const percentileImage = () => {
+    if (percentile >= 85) return <img src={excellent} />;
+    if (percentile > 60 && percentile < 85) return <img src={good} />;
+    if (percentile < 60) return <img src={poor} />;
   };
 
   return (
@@ -250,73 +253,88 @@ const QuestionSection = ({ duration }) => {
           </SlideInRightAnimate>
         </>
       ) : game === true ? (
-        <FadeInUpAnimate>
-          <span className="emoji hourglass"/>
-          <Timer
-            duration={gameDuration}
-            updateDuration={(remainingTime) => {
-              setTime(remainingTime);
-              if (remainingTime <= 0) {
-                setGame(false);
-              }
-            }}
-          />
-          <Message className="question-section">
-            <div className={classes.currentScore}>
-              <div className={classes.currentScoreText}> {count} </div>
-            </div>
-            <Grid>
-              <Typography variant="h3" display="inline" style={{ padding: 5 }}>
-                {numberOne}
-              </Typography>
-              <Typography variant="h3" display="inline" style={{ padding: 5 }}>
-                +
-              </Typography>
-              <Typography variant="h3" display="inline" style={{ padding: 5 }}>
-                <TextField
-                  autoFocus
-                  multiline={false}
-                  rowsMax={1}
-                  className={classes.root}
-                  inputProps={{
-                    style: {
-                      padding: 0,
-                      border: `${error ? '2px' : '1px'} solid ${error ? 'red' : 'black'}`,
-                    },
-                    maxLength: (numberThree - numberOne).toString().length,
-                    inputMode: 'numeric',
-                  }}
-                  error={error}
-                  value={response}
-                  onChange={(event) => isValidMove(event)}
-                />
-              </Typography>
-              <Typography variant="h3" display="inline" style={{ padding: 5 }}>
-                =
-              </Typography>
-              <Typography variant="h3" display="inline" style={{ padding: 5 }}>
-                {numberThree}
-              </Typography>
-            </Grid>
-          </Message>
+        <>
+          <FadeInUpAnimate>
+            {/* <span className="emoji hourglass"/> */}
+            <Timer
+              duration={gameDuration}
+              updateDuration={(remainingTime) => {
+                setTime(remainingTime);
+                if (remainingTime <= 0) {
+                  setGame(false);
+                }
+              }}
+            />
+            <Message className="question-section">
+              <div className={classes.currentScore}>
+                <div className={classes.currentScoreText}> {count} </div>
+              </div>
+              <Grid>
+                <Typography variant="h3" display="inline" style={{ padding: 5 }}>
+                  {numberOne}
+                </Typography>
+                <Typography variant="h3" display="inline" style={{ padding: 5 }}>
+                  +
+                </Typography>
+                <Typography variant="h3" display="inline" style={{ padding: 5 }}>
+                  <TextField
+                    autoFocus
+                    multiline={false}
+                    rowsMax={1}
+                    className={classes.root}
+                    inputProps={{
+                      style: {
+                        padding: 0,
+                        border: `${error ? '2px' : '1px'} solid ${error ? 'red' : 'black'}`,
+                      },
+                      maxLength: (numberThree - numberOne).toString().length,
+                      inputMode: 'numeric',
+                    }}
+                    error={error}
+                    value={response}
+                    onChange={(event) => isValidMove(event)}
+                  />
+                </Typography>
+                <Typography variant="h3" display="inline" style={{ padding: 5 }}>
+                  =
+                </Typography>
+                <Typography variant="h3" display="inline" style={{ padding: 5 }}>
+                  {numberThree}
+                </Typography>
+              </Grid>
+            </Message>
+          </FadeInUpAnimate>
           <img src={question} width="250" height="auto" className="question-image" />
-        </FadeInUpAnimate>
+        </>
       ) : (
         <SlideInRightAnimate>
           <Message>
             {/* <Spinner percentile={percentile} /> */}
-            <Typography variant="h3" display="inline">
-              Game Over
-            </Typography>
+            <GameOverAnimate>
+              <Typography
+                variant="h3"
+                display="inline"
+                style={{
+                  textTransform: 'uppercase',
+                  fontFamily: "'Press Start 2P', cursive",
+                  fontSize: '3em',
+                }}
+              >
+                Game Over
+              </Typography>
+            </GameOverAnimate>
+
             <Typography variant="h4">Your score: {count}</Typography>
             <Typography variant="h4">
-              Your percentile score is : {percentile}. You were compared against score of{' '}
-              {countValue} peers.
+              Your percentile: {percentile}
+              {/* {percentileImage()} */}
+              {/* You were compared against score of{' '}
+              {countValue} peers. */}
             </Typography>
             {user.games.length > 0 && (
               <Typography variant="h5">
                 Your previous scores:
-                <div style={{ height: '150px', overflowY: 'auto' }}>
+                <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
                   {user.games.map((game) => {
                     return (
                       <li>

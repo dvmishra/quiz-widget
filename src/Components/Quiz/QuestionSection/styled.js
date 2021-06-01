@@ -1,4 +1,4 @@
-import { slideInRight, fadeInUp } from 'react-animations';
+import { slideInRight, fadeInUp, flash } from 'react-animations';
 import styled, { keyframes } from 'styled-components';
 
 export const SlideInRightAnimate = styled.div`
@@ -7,4 +7,8 @@ export const SlideInRightAnimate = styled.div`
 
 export const FadeInUpAnimate = styled.div`
   animation: 1s ${keyframes`${fadeInUp}`} 1;
+`;
+
+export const GameOverAnimate = styled.div`
+  animation: 1s ${keyframes`${flash}`} infinite;
 `;

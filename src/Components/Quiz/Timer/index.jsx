@@ -6,13 +6,13 @@ import Card from '@material-ui/core/Card';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { TimeContainer, ShakeAnimate } from './styled';
-
+import ProgressBar from '@ramonak/react-progress-bar';
 momentDurationFormatSetup(moment);
 const useStyles = makeStyles({
   root: {
     width: '100%',
     position: 'relative',
-    top: '30px',
+    top: '35px',
   },
 });
 
@@ -26,7 +26,7 @@ const Timer = ({ duration, updateDuration }) => {
     const id = setInterval(() => {
       if (time !== 0) {
         setTime(time - 1);
-        // if (time % factor === 0) setProgress(progress - 1);
+        if (time % factor === 0) setProgress(progress - 1);
         changeColor();
       }
       updateDuration(time);
@@ -49,16 +49,14 @@ const Timer = ({ duration, updateDuration }) => {
   const displayTime = () => moment.duration(time, 'seconds').format('hh:mm:ss');
 
   return (
-    <>
-      {/* <div className={classes.root}>
-        <LinearProgress variant="determinate" value={progress} style={{ height: '5px' }} />
-      </div> */}
-      <div
-        style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', zIndex: '10' }}
-      >
+    <div style={{ marginTop: '-10px' }}>
+      <div className={classes.root}>
+        <LinearProgress variant="determinate" style={{ height: '10px' }} value={progress} />
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', zIndex: '10' }}>
         <TimeContainer background={timerColor}>{displayTime()}</TimeContainer>
       </div>
-    </>
+    </div>
   );
 };
 
