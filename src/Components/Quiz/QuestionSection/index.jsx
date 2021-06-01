@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Timer from '../Timer';
 import CourseHeader from '../CourseHeader';
 import Message from '../Message';
-import { FadeInUpAnimate, SlideInRightAnimate, GameOverAnimate } from './styled';
+import { FadeInUpAnimate, SlideInRightAnimate, GameOverAnimate, ScoreContainer } from './styled';
 import './style.css';
 import Spinner from '../Spinner';
 import SetTimer from '../Timer/Timer';
@@ -168,12 +168,6 @@ const QuestionSection = ({ duration }) => {
     genrateValues();
   }, []);
 
-  useEffect(() => {
-    if (game) {
-      user.games.push({ duration: gameDuration, startTime: startTime, score: count });
-    }
-  }, [game]);
-
   const isValidMove = (event) => {
     const input = Number(event.target.value);
     setResponse(event.target.value);
@@ -194,7 +188,6 @@ const QuestionSection = ({ duration }) => {
 
   const replay = () => {
     startTime = new Date().toISOString();
-    user.games[user.games.length - 1] = { ...user.games[user.games.length - 1], score: count };
     setUser(user);
     setResponse('');
     setCount(0);
@@ -212,6 +205,14 @@ const QuestionSection = ({ duration }) => {
   const setGameTime = (time) => {
     setTime(time);
     setGameDuraion(time);
+  };
+
+  const _updateTime = (remainingTime) => {
+    setTime(remainingTime);
+    if (remainingTime <= 0) {
+      setGame(false);
+      user.games.push({ duration: gameDuration, startTime: startTime, score: count });
+    }
   };
 
   const percentileImage = () => {
@@ -252,18 +253,13 @@ const QuestionSection = ({ duration }) => {
             </div>
           </SlideInRightAnimate>
         </>
-      ) : game === true ? (
+      ) : game ? (
         <>
           <FadeInUpAnimate>
             {/* <span className="emoji hourglass"/> */}
             <Timer
               duration={gameDuration}
-              updateDuration={(remainingTime) => {
-                setTime(remainingTime);
-                if (remainingTime <= 0) {
-                  setGame(false);
-                }
-              }}
+              updateDuration={(remainingTime) => _updateTime(remainingTime)}
             />
             <Message className="question-section">
               <div className={classes.currentScore}>
@@ -332,18 +328,21 @@ const QuestionSection = ({ duration }) => {
               {countValue} peers. */}
             </Typography>
             {user.games.length > 0 && (
-              <Typography variant="h5">
-                Your previous scores:
-                <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
-                  {user.games.map((game) => {
-                    return (
-                      <li>
-                        Duration: {Number(game.duration) / 60}, Score: {game.score}
-                      </li>
-                    );
-                  })}
-                </div>
-              </Typography>
+              <ScoreContainer>
+                <Typography variant="h5">
+                  <div style={{ borderBottom: "1px solid black" }}>Previous Scores</div>
+
+                  <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
+                    {user.games.map((game) => {
+                      return (
+                        <li>
+                          Duration: {Number(game.duration) / 60}, Score: {game.score}
+                        </li>
+                      );
+                    })}
+                  </div>
+                </Typography>
+              </ScoreContainer>
             )}
           </Message>
           <div className="start-game-container">

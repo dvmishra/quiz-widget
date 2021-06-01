@@ -12,3 +12,7 @@ export const FadeInUpAnimate = styled.div`
 export const GameOverAnimate = styled.div`
   animation: 1s ${keyframes`${flash}`} infinite;
 `;
+
+export const ScoreContainer = styled.section`
+  border: 1px solid black;
+`;
