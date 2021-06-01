@@ -11,26 +11,25 @@ export class Queue {
   front;
   rear;
   size;
+  currentSize;
 
   constructor(size) {
     this.rear = null;
     this.front = null;
     this.size = size;
+    this.currentSize = 0;
   }
 
   isFull() {
-    let count = 0;
-    let head = this.front;
-    while (head !== null) {
-      count += 1;
-      if (count === this.size) return true;
-      head = head.next;
+    if (this.currentSize >= this.size) {
+      return true;
     }
     return false;
   }
 
   enqueue(item) {
     const node = new Node(item);
+    this.currentSize += 1;
     if (this.rear === null) {
       this.rear = node;
       this.front = node;
@@ -51,11 +50,13 @@ export class Queue {
       this.rear = null;
     }
 
+    this.currentSize -= 1;
     return node;
   }
 
   clear() {
     this.front = null;
     this.rear = null;
+    this.currentSize = 0;
   }
 }
