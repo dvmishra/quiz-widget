@@ -41,14 +41,11 @@ export class Queue {
 
   dequeue() {
     if (this.front === null) {
+      this.rear = null;
       return;
     }
     const node = this.front;
     this.front = this.front.next;
-
-    if (this.front === null) {
-      this.rear = null;
-    }
 
     this.currentSize -= 1;
     return node;
