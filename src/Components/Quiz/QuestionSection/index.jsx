@@ -9,6 +9,8 @@ import './style.css';
 import Spinner from '../Spinner';
 import SetTimer from '../Timer/Timer';
 import { UserContext } from '../../Layout/Dashboard/UserContext';
+import quiz from '../../../images/quiz_board.svg';
+import question from '../../../images/question.svg';
 
 const useStyles = makeStyles({
   root: {
@@ -191,7 +193,7 @@ const QuestionSection = ({ duration }) => {
 
   const replay = () => {
     if (time === 0) {
-      alert("Choose time")
+      alert('Choose time');
       return null;
     }
     startTime = new Date().toISOString();
@@ -202,7 +204,6 @@ const QuestionSection = ({ duration }) => {
     setGame(true);
     allValues = {};
     setError(false);
-    
   };
 
   const moveToGame = () => {
@@ -219,16 +220,21 @@ const QuestionSection = ({ duration }) => {
   return (
     <>
       <CourseHeader heading="Course Introduction" />
-
       {isIntroduction ? (
         <>
+          <img src={quiz} width="283" height="auto" className="quiz-image" />
           <SlideInRightAnimate>
             <Message>
-              <Typography variant="h3" display="inline">
-                Rules for the game
-              </Typography>
-              <Typography variant="h4">Point 1</Typography>
-              <Typography variant="h4">Point 2.</Typography>
+              <Typography variant="h3">Rules for the game</Typography>
+
+              <div style={{ paddingTop: '5px' }}>
+                <Typography variant="h6">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                </Typography>
+                <Typography variant="h6">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry..
+                </Typography>
+              </div>
             </Message>
             <div className="start-game-container">
               <SetTimer setTime={setGameTime} />
@@ -245,7 +251,7 @@ const QuestionSection = ({ duration }) => {
         </>
       ) : game === true ? (
         <FadeInUpAnimate>
-          <div className="box">❓</div>
+          <span className="emoji hourglass"/>
           <Timer
             duration={gameDuration}
             updateDuration={(remainingTime) => {
@@ -293,6 +299,7 @@ const QuestionSection = ({ duration }) => {
               </Typography>
             </Grid>
           </Message>
+          <img src={question} width="250" height="auto" className="question-image" />
         </FadeInUpAnimate>
       ) : (
         <SlideInRightAnimate>

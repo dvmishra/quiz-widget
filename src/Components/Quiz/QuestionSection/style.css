@@ -25,7 +25,6 @@
 .emoji::after {
   font-size: 4em;
   min-width: 1.4em;
-  margin: 0.3em 0.4em;
   text-align: center;
 }
 
@@ -35,6 +34,27 @@
   animation-duration: 2s;
   animation-timing-function: ease;
   animation-iteration-count: infinite;
+}
+.emoji::after {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.hourglass::after {
+  content: '⏳';
+  --emoji: '⌛️';
+  animation-name: twoFrames;
+  animation-duration: 1.2s;
+  width: 100px;
+  height: 100px;
+  font-size: 4em;
+  position: absolute;
+}
+
+@keyframes twoFrames {
+  50% {
+      content: var(--emoji);
+  }
 }
 
 @keyframes question {

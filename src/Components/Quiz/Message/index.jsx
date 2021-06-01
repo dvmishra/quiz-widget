@@ -10,6 +10,7 @@ const Message = ({ children, className }) => (
       height: '100%',
       background: 'transparent',
       backdropFilter: 'blur(4px)',
+      lineHeight: "2em",
     }}
     className={className}
   >

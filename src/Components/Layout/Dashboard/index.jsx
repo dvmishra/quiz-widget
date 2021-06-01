@@ -12,6 +12,7 @@ import Timer from '../../Quiz/Timer';
 import QuestionSection from '../../Quiz/QuestionSection';
 import './style.css';
 import { UserContext, userData } from './UserContext';
+import quiz from '../../../images/quiz_board.svg';
 
 export const Dashboard = (props) => {
   const [user, setUser] = useState(userData);
@@ -75,13 +76,9 @@ function SimpleCard() {
                 <div style={{ paddingTop: '10%' }} />
               </Skeleton>
             ) : (
-              // <img
-              //   src="https://i.pinimg.com/originals/5a/bf/93/5abf939069cc0ae4633e9b1670f11ed5.jpg"
-              //   width="300"
-              //   height="400"
-              //   alt=""
-              // />
-              <QuestionSection duration={5} />
+              <>
+                <QuestionSection duration={5} />
+              </>
             )}
           </CardContent>
 

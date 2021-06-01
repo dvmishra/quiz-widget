@@ -4,7 +4,7 @@ import React from 'react';
 const CourseHeader = ({ heading }) => {
   return (
     <>
-      <Card style={{ background: 'transparent', backdropFilter: 'blur(4px)' }}>
+      <Card style={{ background: 'transparent' }}>
         <CardContent>
           <Typography variant="h3">{heading}</Typography>
         </CardContent>

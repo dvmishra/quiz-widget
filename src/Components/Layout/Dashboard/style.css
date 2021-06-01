@@ -5,10 +5,29 @@
 
 .container {
   width: 900px;
+  position: relative;
+  z-index: 10;
+}
+
+.quiz-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+}
+
+.question-image {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
 }
 
 @media only screen and (max-width: 905px) {
   .container {
     width: auto;
+  }
+  .quiz-image {
+    opacity: 0.75;
   }
 }
