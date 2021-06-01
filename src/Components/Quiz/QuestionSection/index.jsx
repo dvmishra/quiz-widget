@@ -130,20 +130,6 @@ const QuestionSection = ({ duration }) => {
   let startTime = new Date().toISOString();
   const { user, setUser } = useContext(UserContext);
 
-  const generateUniqueRandomNumber = (limit) => {
-    let number = 0;
-    if (limit === 10) number = Math.round(Math.random() * 9);
-    else if (limit === 100) number = 10 + Math.round(Math.random() * 89);
-    else number = 100 + Math.round(Math.random() * 899);
-    if (number in allValues) {
-      const answers = [10, 100, 1000];
-      limit = answers[Math.floor(Math.random() * answers.length)];
-      generateUniqueRandomNumber(limit);
-    }
-    allValues = { ...allValues, [number]: 0 };
-    return number;
-  };
-
   const genrateValues = () => {
     let answer;
     let number1 = 0;
