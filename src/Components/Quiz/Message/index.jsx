@@ -9,10 +9,10 @@ const Message = ({ children, className }) => (
       marginTop: '3%',
       marginBottom: '5%',
       height: '100%',
-      background: '#fff',
+      background: 'transparent',
       backdropFilter: 'blur(4px)',
-      lineHeight: "2em",
-      borderBottom: '3px solid #7482E8'
+      lineHeight: '2em',
+      borderBottom: '3px solid #7482E8',
     }}
     className={className}
   >
