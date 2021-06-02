@@ -85,21 +85,6 @@ function SimpleCard() {
               </>
             )}
           </CardContent>
-
-          {/* <CardContent style={{ height: '75%' }}>
-        {loading ? (
-          <Skeleton variant="rect" width="100%" height="100%">
-            <div style={{ paddingTop: '10%' }} />
-          </Skeleton>
-        ) : (
-          <img
-            src="https://i.pinimg.com/originals/5a/bf/93/5abf939069cc0ae4633e9b1670f11ed5.jpg"
-            width="300"
-            height="400"
-            alt=""
-          />
-        )}
-      </CardContent> */}
         </Card>
       </Grid>
     </Grid>
