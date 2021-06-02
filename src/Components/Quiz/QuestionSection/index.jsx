@@ -112,6 +112,7 @@ const myPercentile = (score) => {
 
 let numberMap = {};
 const numberQueue = new Queue(10);
+let gameDetails = {};
 
 const QuestionSection = ({ duration }) => {
   const classes = useStyles();
@@ -198,16 +199,17 @@ const QuestionSection = ({ duration }) => {
     }
   };
 
-  const replay = () => {
+  function replay() {
     startTime = new Date().toISOString();
     numberQueue.clear();
     numberMap = {};
-    setUser(user);
+    setUser(gameDetails);
     setResponse('');
+    gameDetails = {};
     setCount(0);
     setGame(true);
     setError(false);
-  };
+  }
 
   const moveToGame = () => {
     startTime = new Date().toISOString();
@@ -220,13 +222,14 @@ const QuestionSection = ({ duration }) => {
     setGameDuraion(time);
   };
 
-  const _updateTime = (remainingTime) => {
+  function _updateTime(remainingTime) {
     setTime(remainingTime);
     if (remainingTime <= 0) {
       setGame(false);
-      user.games.push({ duration: gameDuration, startTime: startTime, score: count });
+      gameDetails = JSON.parse(JSON.stringify(user))
+      gameDetails.games.push({ duration: gameDuration, startTime: startTime, score: count });
     }
-  };
+  }
 
   const percentileImage = () => {
     if (percentile >= 85) return <img src={excellent} />;

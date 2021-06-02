@@ -6,9 +6,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 const StyledMenu = withStyles({
   paper: {
@@ -69,7 +67,9 @@ export default function DurationMenu({ setTime }) {
         onClick={handleClick}
         style={{ marginTop: 10, width: '100%' }}
       >
-        <Typography variant="h6">Choose Timing : {Number(duration) / 60} mins</Typography>
+        <Typography variant="h6">
+          Choose Timing : {Number(duration) / 60} {duration === '60' ? 'min' : 'mins'}
+        </Typography>
       </Button>
       <StyledMenu
         id="customized-menu"
@@ -79,13 +79,22 @@ export default function DurationMenu({ setTime }) {
         onClose={handleClose}
       >
         <StyledMenuItem data-duration="60" onClick={handleItemClick} selected={duration === '60'}>
+          <ListItemIcon>
+            <AccessTimeIcon fontSize="small" />
+          </ListItemIcon>
           <ListItemText primary="1 min" />
         </StyledMenuItem>
         <StyledMenuItem data-duration="180" onClick={handleItemClick} selected={duration === '180'}>
-          <ListItemText primary="3 min" />
+          <ListItemIcon>
+            <AccessTimeIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="3 mins" />
         </StyledMenuItem>
         <StyledMenuItem data-duration="300" onClick={handleItemClick} selected={duration === '300'}>
-          <ListItemText primary="5 min" />
+          <ListItemIcon>
+            <AccessTimeIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="5 mins" />
         </StyledMenuItem>
       </StyledMenu>
     </div>
