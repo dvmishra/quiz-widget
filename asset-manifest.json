@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/quiz-widget/static/css/main.659039bc.chunk.css",
-    "main.js": "/quiz-widget/static/js/main.17a0d579.chunk.js",
-    "main.js.map": "/quiz-widget/static/js/main.17a0d579.chunk.js.map",
-    "runtime-main.js": "/quiz-widget/static/js/runtime-main.d414191e.js",
-    "runtime-main.js.map": "/quiz-widget/static/js/runtime-main.d414191e.js.map",
-    "static/js/2.ee719265.chunk.js": "/quiz-widget/static/js/2.ee719265.chunk.js",
-    "static/js/2.ee719265.chunk.js.map": "/quiz-widget/static/js/2.ee719265.chunk.js.map",
-    "static/js/3.8d5946ab.chunk.js": "/quiz-widget/static/js/3.8d5946ab.chunk.js",
-    "static/js/3.8d5946ab.chunk.js.map": "/quiz-widget/static/js/3.8d5946ab.chunk.js.map",
+    "main.css": "/quiz-widget/static/css/main.6f0f7001.chunk.css",
+    "main.js": "/quiz-widget/static/js/main.0d0d7d57.chunk.js",
+    "main.js.map": "/quiz-widget/static/js/main.0d0d7d57.chunk.js.map",
+    "runtime-main.js": "/quiz-widget/static/js/runtime-main.f464c0c1.js",
+    "runtime-main.js.map": "/quiz-widget/static/js/runtime-main.f464c0c1.js.map",
+    "static/js/2.efbe2965.chunk.js": "/quiz-widget/static/js/2.efbe2965.chunk.js",
+    "static/js/2.efbe2965.chunk.js.map": "/quiz-widget/static/js/2.efbe2965.chunk.js.map",
+    "static/js/3.ef239fee.chunk.js": "/quiz-widget/static/js/3.ef239fee.chunk.js",
+    "static/js/3.ef239fee.chunk.js.map": "/quiz-widget/static/js/3.ef239fee.chunk.js.map",
     "index.html": "/quiz-widget/index.html",
-    "static/css/main.659039bc.chunk.css.map": "/quiz-widget/static/css/main.659039bc.chunk.css.map",
-    "static/js/2.ee719265.chunk.js.LICENSE.txt": "/quiz-widget/static/js/2.ee719265.chunk.js.LICENSE.txt",
+    "static/css/main.6f0f7001.chunk.css.map": "/quiz-widget/static/css/main.6f0f7001.chunk.css.map",
+    "static/js/2.efbe2965.chunk.js.LICENSE.txt": "/quiz-widget/static/js/2.efbe2965.chunk.js.LICENSE.txt",
     "static/media/above_average.1364f779.png": "/quiz-widget/static/media/above_average.1364f779.png",
     "static/media/excellent.45ee39bf.svg": "/quiz-widget/static/media/excellent.45ee39bf.svg",
     "static/media/good.cd88e9a2.svg": "/quiz-widget/static/media/good.cd88e9a2.svg",
@@ -20,9 +20,9 @@
     "static/media/quiz_board.bbfba0b2.svg": "/quiz-widget/static/media/quiz_board.bbfba0b2.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.d414191e.js",
-    "static/js/2.ee719265.chunk.js",
-    "static/css/main.659039bc.chunk.css",
-    "static/js/main.17a0d579.chunk.js"
+    "static/js/runtime-main.f464c0c1.js",
+    "static/js/2.efbe2965.chunk.js",
+    "static/css/main.6f0f7001.chunk.css",
+    "static/js/main.0d0d7d57.chunk.js"
   ]
 }
