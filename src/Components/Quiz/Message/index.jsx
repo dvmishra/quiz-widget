@@ -7,10 +7,12 @@ const Message = ({ children, className }) => (
       padding: '50px',
       textAlign: 'center',
       marginTop: '3%',
+      marginBottom: '5%',
       height: '100%',
-      background: 'transparent',
+      background: '#fff',
       backdropFilter: 'blur(4px)',
       lineHeight: "2em",
+      borderBottom: '3px solid #7482E8'
     }}
     className={className}
   >

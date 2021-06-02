@@ -79,21 +79,12 @@ export default function DurationMenu({ setTime }) {
         onClose={handleClose}
       >
         <StyledMenuItem data-duration="60" onClick={handleItemClick} selected={duration === '60'}>
-          <ListItemIcon>
-            <SendIcon fontSize="small" />
-          </ListItemIcon>
           <ListItemText primary="1 min" />
         </StyledMenuItem>
         <StyledMenuItem data-duration="180" onClick={handleItemClick} selected={duration === '180'}>
-          <ListItemIcon>
-            <DraftsIcon fontSize="small" />
-          </ListItemIcon>
           <ListItemText primary="3 min" />
         </StyledMenuItem>
         <StyledMenuItem data-duration="300" onClick={handleItemClick} selected={duration === '300'}>
-          <ListItemIcon>
-            <InboxIcon fontSize="small" />
-          </ListItemIcon>
           <ListItemText primary="5 min" />
         </StyledMenuItem>
       </StyledMenu>
