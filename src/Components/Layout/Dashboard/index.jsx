@@ -17,7 +17,10 @@ import quiz from '../../../images/quiz_board.svg';
 export const Dashboard = (props) => {
   const [user, setUser] = useState(userData);
   return (
-    <Paper variant="outlined" style={{ display: 'flex', flexDirection: 'row', backgroundColor: '#F5F7FA' }}>
+    <Paper
+      variant="outlined"
+      style={{ display: 'flex', flexDirection: 'row', backgroundColor: '#F5F7FA' }}
+    >
       <UserContext.Provider value={{ user, setUser }}>
         <SimpleCard />
       </UserContext.Provider>
@@ -29,7 +32,7 @@ export const Dashboard = (props) => {
 const useStyles = makeStyles({
   root: {
     width: 900,
-    backgroundColor: '#F5F7FA'
+    backgroundColor: '#F5F7FA',
   },
   bullet: {
     display: 'inline-block',
@@ -70,7 +73,7 @@ function SimpleCard() {
   return (
     <Grid container>
       <Grid item md={12}>
-        <Card className="dashboard-background container">
+        <Card className=" container">
           <CardContent className="dashboard-background">
             {loading ? (
               <Skeleton variant="rect" width="100%" height="20%">

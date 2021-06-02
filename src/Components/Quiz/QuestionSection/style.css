@@ -2,6 +2,7 @@
 
 .question-section {
   padding: 50px !important;
+  position: relative;
 }
 
 .start-game-container {
