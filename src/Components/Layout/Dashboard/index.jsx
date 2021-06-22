@@ -13,8 +13,9 @@ import QuestionSection from '../../Quiz/QuestionSection';
 import './style.css';
 import { UserContext, userData } from './UserContext';
 import quiz from '../../../images/quiz_board.svg';
+import axios from 'axios';
 
-export const Dashboard = (props) => {
+export const Dashboard = ({g_id, u_id}) => {
   const [user, setUser] = useState(userData);
   return (
     <Paper
@@ -22,7 +23,7 @@ export const Dashboard = (props) => {
       style={{ display: 'flex', flexDirection: 'row', backgroundColor: '#F5F7FA' }}
     >
       <UserContext.Provider value={{ user, setUser }}>
-        <SimpleCard />
+        <SimpleCard g_id={g_id} u_id={u_id} />
       </UserContext.Provider>
       {/* <Skeleton variant="rect" width={210} height={118} /> */}
     </Paper>
@@ -59,21 +60,35 @@ const useStyles = makeStyles({
   },
 });
 
-function SimpleCard() {
+function SimpleCard({g_id, u_id}) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
   const [loading, setLoading] = useState(true);
-
+  const [data, setData] = useState();
+  
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+    if(loading){
+      const payload = {
+        "game_id": g_id,
+        "user_id": u_id
+      }
+  
+      axios.post("https://profved.com/wp-json/wp/v1/game_meta_data", { payload })
+        .then(response => {
+          setData(response.data.msg[0]);
+          setLoading(false);
+        })
+        .catch(exception => {
+          console.log(exception);
+          setLoading(false);
+        });
+    }
   });
 
   return (
-    <Grid container>
+    <Grid widget-container>
       <Grid item md={12}>
-        <Card className=" container">
+        <Card className=" widget-container">
           <CardContent className="dashboard-background">
             {loading ? (
               <Skeleton variant="rect" width="100%" height="20%">
@@ -81,7 +96,7 @@ function SimpleCard() {
               </Skeleton>
             ) : (
               <>
-                <QuestionSection duration={5} />
+                <QuestionSection game_details={data} g_id={g_id} u_id={u_id} />
               </>
             )}
           </CardContent>

@@ -15,10 +15,12 @@ import excellent from '../../../images/excellent.svg';
 import good from '../../../images/good.svg';
 import poor from '../../../images/poor.svg';
 import { Queue } from '../../../utilities/Queue';
+import uuid from "uuid";
+import axios from 'axios';
 
 const useStyles = makeStyles({
   root: {
-    width: 75,
+    width: 120,
     '& .MuiInputBase-root': {
       fontSize: '3rem',
     },
@@ -114,41 +116,41 @@ let numberMap = {};
 const numberQueue = new Queue(10);
 let gameDetails = {};
 
-const QuestionSection = ({ duration }) => {
+const QuestionSection = ({ game_details, g_id, u_id }) => {
   const classes = useStyles();
   const [numberOne, setNumberOne] = useState(0);
   const [numberTwo, setNumberTwo] = useState(0);
   const [numberThree, setNumberThree] = useState(0);
   const [response, setResponse] = useState('');
   const [error, setError] = useState(false);
-  const [time, setTime] = useState(300);
-  const [gameDuration, setGameDuraion] = useState(300);
+  const [time, setTime] = useState(Number(game_details.duration));
+  const [gameDuration, setGameDuraion] = useState(Number(game_details.duration));
   const [count, setCount] = useState(0);
   const [percentile, setPercentile] = useState(0);
   const [isIntroduction, setIsIntroduction] = useState(true);
   const [game, setGame] = useState(false);
+  const [pass, setPass] = useState(false);
+  const [playId, setPlayId] = useState(uuid.v4());
+  let username = "";
+
+  if(game_details.username == null){
+    username = "";
+  }
+  else{
+    username= " "+ game_details.username;
+  }
 
   let startTime = new Date().toISOString();
   const { user, setUser } = useContext(UserContext);
 
   const genrateValues = () => {
     let answer;
+    const number2 = 11;
     let number1 = 0;
     while (true) {
-      const answers = [10, 100, 1000];
-      answer = answers[Math.floor(Math.random() * answers.length)];
-      number1 = 0;
-      switch (answer) {
-        case 10:
-          number1 = Math.round(Math.random() * 9);
-          break;
-        case 100:
-          number1 = 10 + Math.round(Math.random() * 89);
-          break;
-        case 1000:
-          number1 = 100 + Math.round(Math.random() * 899);
-          break;
-      }
+      number1 = 11 + Math.floor(Math.random() * 89)
+      answer = 11 * number1;
+
       if (number1 in numberMap === false) {
         if (!numberQueue.isFull()) {
           numberMap[number1] = 0;
@@ -162,10 +164,9 @@ const QuestionSection = ({ duration }) => {
         break;
       }
     }
-    const number2 = answer - number1;
-    setNumberThree(answer);
-    setNumberTwo(number2);
-    setNumberOne(number1);
+    setNumberThree(number1);
+    setNumberTwo(answer);
+    setNumberOne(number2);
   };
 
   useEffect(() => {
@@ -195,6 +196,10 @@ const QuestionSection = ({ duration }) => {
       }, 300);
       setError(false);
       setCount(count + 1);
+      
+      if(count+1 >= Number(game_details.passing_average)){
+        setPass(true);
+      }
       setPercentile(myPercentile(count));
     }
   };
@@ -209,6 +214,8 @@ const QuestionSection = ({ duration }) => {
     setCount(0);
     setGame(true);
     setError(false);
+    setPass(false);
+    setPlayId(uuid.v4());
   }
 
   const moveToGame = () => {
@@ -237,9 +244,29 @@ const QuestionSection = ({ duration }) => {
     if (percentile < 60) return <img src={poor} />;
   };
 
+  const updateScore = (playId, count, percentile, gameDuration) => {
+
+    const userId = Number(u_id);
+    
+
+    const payload = {
+        "user_id" : userId,
+        "game_id" : g_id,
+        "play_id" : playId,
+        "score" : count,
+        "percentile" : percentile,
+        "duration" : gameDuration
+    }
+
+    axios.post(`https://profved.com/wp-json/wp-json/wp/v1/games/`, { payload })
+      .then(response => {
+
+      })
+  }
+
   return (
     <>
-      <CourseHeader heading="Course Introduction" />
+      <CourseHeader heading={game_details.name} />
       {isIntroduction ? (
         <>
           {/* <img src={quiz} width="283" height="auto" className="quiz-image" /> */}
@@ -249,20 +276,17 @@ const QuestionSection = ({ duration }) => {
                 style={{ fontWeight: 400, color: '#5564CC', marginBottom: 10 }}
                 variant="h4"
               >
-                Rules for the game
+                {game_details.description}
               </Typography>
 
               <div style={{ paddingTop: '5px', fontWeight: 200, color: '#5564CC' }}>
                 <Typography variant="h6">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                </Typography>
-                <Typography variant="h6">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry..
+                {game_details.introduction}
                 </Typography>
               </div>
             </Message>
             <div className="start-game-container">
-              <SetTimer setTime={setGameTime} />
+              {/* <SetTimer setTime={setGameTime} /> */}
               <Button
                 color="primary"
                 variant="contained"
@@ -287,11 +311,17 @@ const QuestionSection = ({ duration }) => {
                 <div className={classes.currentScoreText}> {count} </div>
               </div>
               <Grid>
+              <Typography variant="h3" display="inline" style={{ padding: 5 }}>
+                  {numberThree}
+                </Typography>
+                <Typography variant="h3" display="inline" style={{ padding: 5 }}>
+                  X
+                </Typography>
                 <Typography variant="h3" display="inline" style={{ padding: 5 }}>
                   {numberOne}
                 </Typography>
                 <Typography variant="h3" display="inline" style={{ padding: 5 }}>
-                  +
+                  =
                 </Typography>
                 <Typography variant="h3" display="inline" style={{ padding: 5 }}>
                   <TextField
@@ -304,7 +334,7 @@ const QuestionSection = ({ duration }) => {
                         padding: 0,
                         border: `${error ? '2px' : '1px'} solid ${error ? 'red' : 'black'}`,
                       },
-                      maxLength: (numberThree - numberOne).toString().length,
+                      maxLength: 4,
                       inputMode: 'numeric',
                     }}
                     error={error}
@@ -312,21 +342,17 @@ const QuestionSection = ({ duration }) => {
                     onChange={(event) => isValidMove(event)}
                   />
                 </Typography>
-                <Typography variant="h3" display="inline" style={{ padding: 5 }}>
-                  =
-                </Typography>
-                <Typography variant="h3" display="inline" style={{ padding: 5 }}>
-                  {numberThree}
-                </Typography>
+                
               </Grid>
             </Message>
           </FadeInUpAnimate>
-          <img src={question} width="250" height="auto" className="question-image" />
         </>
       ) : (
         <SlideInRightAnimate>
           <Message>
-            {/* <Spinner percentile={percentile} /> */}
+            {/* <Spinner percentile={percentile} /> */
+               updateScore(playId, count, percentile, Number(game_details.duration))
+            }
             <GameOverAnimate>
               <Typography
                 variant="h3"
@@ -342,8 +368,27 @@ const QuestionSection = ({ duration }) => {
             </GameOverAnimate>
 
             <Typography variant="h4">Your score: {count}</Typography>
+            {
+              pass ? (
+                <>
+                <Typography variant="h4">
+                  Hi{username}, Congratulations! You have done it. You have mastered {game_details.name}.
+                </Typography>
+                </>
+
+              ) : 
+              
+              (
+                <>
+                <Typography variant="h4">
+                  Hi{username}, keep going, score {game_details.passing_average} or more to cross the line.
+                </Typography>
+                </>
+              )
+
+            }
             <Typography variant="h4">
-              Your percentile: {percentile}
+              {/* Your percentile: {percentile} */}
               {/* {percentileImage()} */}
               {/* You were compared against score of{' '}
               {countValue} peers. */}
@@ -357,7 +402,7 @@ const QuestionSection = ({ duration }) => {
                     {user.games.map((game) => {
                       return (
                         <li>
-                          Duration: {Number(game.duration) / 60}, Score: {game.score}
+                          Duration: {Number(game.duration) / 60} mins, Score: {game.score}
                         </li>
                       );
                     })}
@@ -367,9 +412,9 @@ const QuestionSection = ({ duration }) => {
             )}
           </Message>
           <div className="start-game-container">
-            <SetTimer setTime={setGameTime} />
+            {/* <SetTimer setTime={setGameTime} /> */}
             <Button color="primary" variant="contained" style={{ marginTop: 10 }} onClick={replay}>
-              <Typography variant="h6">REPLAY</Typography>
+              <Typography variant="h6">Play Again</Typography>
             </Button>
           </div>
         </SlideInRightAnimate>

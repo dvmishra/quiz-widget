@@ -2,7 +2,7 @@
   background: transparent;
 }
 
-.container {
+.widget-container {
   width: 900px;
   position: relative;
   z-index: 10;
