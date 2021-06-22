@@ -15,9 +15,9 @@ import excellent from '../../../images/excellent.svg';
 import good from '../../../images/good.svg';
 import poor from '../../../images/poor.svg';
 import { Queue } from '../../../utilities/Queue';
-import uuid from "uuid";
+import {v4 as uuidv4} from "uuid";
 import axios from 'axios';
-
+ 
 const useStyles = makeStyles({
   root: {
     width: 120,
@@ -43,7 +43,7 @@ const useStyles = makeStyles({
     fontWeight: 700,
   },
 });
-
+ 
 const frequency = [
   { score: '24', freq: '5' },
   { score: '36', freq: '9' },
@@ -55,21 +55,21 @@ const frequency = [
   { score: '81', freq: '5' },
   { score: '93', freq: '3' },
 ];
-
+ 
 let countValue = frequency.reduce((countValues, obj) => (countValues += Number(obj.freq)), 0);
-
+ 
 const sortedNth = (frequencyMap, n) => {
   let bucketStartIndex = 0;
   let keys = [];
   frequency.forEach((arrayItem) => {
     keys.push(Number(arrayItem.score));
   });
-
+ 
   let values = [];
   frequency.forEach((arrayItem) => {
     values.push(Number(arrayItem.freq));
   });
-
+ 
   for (let i = 0; i < keys.length; i += 1) {
     let currentFrequency = values[i];
     let bucketEndIndex = bucketStartIndex + currentFrequency;
@@ -78,20 +78,20 @@ const sortedNth = (frequencyMap, n) => {
     }
     bucketStartIndex = bucketEndIndex;
   }
-
+ 
   return keys[keys.length - 1];
 };
-
+ 
 const kthPercentile = (valueFrequencies, k) => {
   const index = (k / 100) * countValue;
   return sortedNth(valueFrequencies, Math.floor(index));
 };
-
+ 
 let percentileTenth = [];
 for (let i = 0; i <= 100; i += 10) {
   percentileTenth.push(Number(kthPercentile(frequency, i)));
 }
-
+ 
 const myPercentile = (score) => {
   let myPercentileEndRange = Number(percentileTenth.length - 1);
   for (let i = 1; i < percentileTenth.length; i += 1) {
@@ -100,9 +100,9 @@ const myPercentile = (score) => {
       break;
     }
   }
-
+ 
   let myPercentileStartRange = myPercentileEndRange - 1;
-
+ 
   const myPercentileValue = (
     myPercentileStartRange * 10 +
     ((score - percentileTenth[myPercentileStartRange] + 1) /
@@ -111,11 +111,11 @@ const myPercentile = (score) => {
   ).toFixed(2);
   return myPercentileValue < 0 ? 0 : myPercentileValue > 100 ? 100 : myPercentileValue;
 };
-
+ 
 let numberMap = {};
 const numberQueue = new Queue(10);
 let gameDetails = {};
-
+ 
 const QuestionSection = ({ game_details, g_id, u_id }) => {
   const classes = useStyles();
   const [numberOne, setNumberOne] = useState(0);
@@ -129,28 +129,31 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
   const [percentile, setPercentile] = useState(0);
   const [isIntroduction, setIsIntroduction] = useState(true);
   const [game, setGame] = useState(false);
-  const [pass, setPass] = useState(false);
-  const [playId, setPlayId] = useState(uuid.v4());
+  const [calculatingScore, setCalculatingScore] = useState(true);
+  const [finalMessage, setFinalMessage] = useState("");
+  const [playId, setPlayId] = useState(uuidv4());
   let username = "";
-
+ 
   if(game_details.username == null){
     username = "";
   }
   else{
     username= " "+ game_details.username;
   }
-
+ 
   let startTime = new Date().toISOString();
   const { user, setUser } = useContext(UserContext);
-
+ 
   const genrateValues = () => {
     let answer;
-    const number2 = 11;
+    let number2 = 0;
     let number1 = 0;
     while (true) {
-      number1 = 11 + Math.floor(Math.random() * 89)
-      answer = 11 * number1;
-
+      
+      number1 = 2 + Math.floor(Math.random() * 8);
+      number2 = 2 + Math.floor(Math.random() * 8);
+      answer = number1 * number2;
+ 
       if (number1 in numberMap === false) {
         if (!numberQueue.isFull()) {
           numberMap[number1] = 0;
@@ -164,16 +167,20 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
         break;
       }
     }
+    
     setNumberThree(number1);
     setNumberTwo(answer);
     setNumberOne(number2);
+ 
+   
+ 
   };
-
+ 
   useEffect(() => {
     window.onbeforeunload = (event) => {
       const e = event || window.event;
       e.preventDefault();
-
+ 
       if (e) {
         e.returnValue = '';
       }
@@ -181,7 +188,7 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
     };
     genrateValues();
   }, []);
-
+ 
   const isValidMove = (event) => {
     const input = Number(event.target.value);
     setResponse(event.target.value);
@@ -196,14 +203,38 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
       }, 300);
       setError(false);
       setCount(count + 1);
-      
-      if(count+1 >= Number(game_details.passing_average)){
-        setPass(true);
-      }
-      setPercentile(myPercentile(count));
     }
   };
-
+ 
+  const calculateLevel = () => {
+    let message = "Hi"+username+", Challenge yourself! You are currently at the STARTER level. Aim for "+game_details.challenger_score+" to go to the CHALLENGER LEVEL.";
+    
+    switch(true){
+      case count >= Number(game_details.genius_score):
+        message = "Hi"+username+", you were born to be genius! You are at the highet level now. But geniuses never stop, if you want to go further, keep practicing, keep going higher.";
+        setFinalMessage(message);
+        break;
+      case count >= Number(game_details.master_score):
+        message = "Hi MASTER"+username+", you are at MASTER level now, Congrats! soon to become a Genius! Master this a little more. Aim for "+game_details.genius_score+" and go to the GENIUS LEVEL.";
+        setFinalMessage(message);
+        break;
+      case count >= Number(game_details.challenger_score):
+        message = "Hi"+username+", you are a CHALLENGER now! You are soon to become a Master! Challenge yoruself a little more. Aim for "+game_details.master_score+" and go to the MASTER LEVEL.";
+        setFinalMessage(message);
+        console.log(message);
+        break;
+      default:
+        setFinalMessage(message);
+        break;
+  
+    }
+    console.log(message);
+    console.log(count);
+    console.log(game_details.challenger_score);
+    setCalculatingScore(false);
+    setPercentile(myPercentile(count));
+  }
+ 
   function replay() {
     startTime = new Date().toISOString();
     numberQueue.clear();
@@ -214,21 +245,22 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
     setCount(0);
     setGame(true);
     setError(false);
-    setPass(false);
-    setPlayId(uuid.v4());
+    setCalculatingScore(true);
+    setFinalMessage("");
+    setPlayId(uuidv4());
   }
-
+ 
   const moveToGame = () => {
     startTime = new Date().toISOString();
     setIsIntroduction(false);
     setGame(true);
   };
-
+ 
   const setGameTime = (time) => {
     setTime(time);
     setGameDuraion(time);
   };
-
+ 
   function _updateTime(remainingTime) {
     setTime(remainingTime);
     if (remainingTime <= 0) {
@@ -237,18 +269,18 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
       gameDetails.games.push({ duration: gameDuration, startTime: startTime, score: count });
     }
   }
-
+ 
   const percentileImage = () => {
     if (percentile >= 85) return <img src={excellent} />;
     if (percentile > 60 && percentile < 85) return <img src={good} />;
     if (percentile < 60) return <img src={poor} />;
   };
-
+ 
   const updateScore = (playId, count, percentile, gameDuration) => {
-
+ 
     const userId = Number(u_id);
     
-
+ 
     const payload = {
         "user_id" : userId,
         "game_id" : g_id,
@@ -257,13 +289,13 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
         "percentile" : percentile,
         "duration" : gameDuration
     }
-
+ 
     axios.post(`https://profved.com/wp-json/wp-json/wp/v1/games/`, { payload })
       .then(response => {
-
+ 
       })
   }
-
+ 
   return (
     <>
       <CourseHeader heading={game_details.name} />
@@ -278,7 +310,7 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
               >
                 {game_details.description}
               </Typography>
-
+ 
               <div style={{ paddingTop: '5px', fontWeight: 200, color: '#5564CC' }}>
                 <Typography variant="h6">
                 {game_details.introduction}
@@ -315,7 +347,7 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
                   {numberThree}
                 </Typography>
                 <Typography variant="h3" display="inline" style={{ padding: 5 }}>
-                  X
+                  x
                 </Typography>
                 <Typography variant="h3" display="inline" style={{ padding: 5 }}>
                   {numberOne}
@@ -334,7 +366,7 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
                         padding: 0,
                         border: `${error ? '2px' : '1px'} solid ${error ? 'red' : 'black'}`,
                       },
-                      maxLength: 4,
+                      maxLength: 3,
                       inputMode: 'numeric',
                     }}
                     error={error}
@@ -350,8 +382,8 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
       ) : (
         <SlideInRightAnimate>
           <Message>
-            {/* <Spinner percentile={percentile} /> */
-               updateScore(playId, count, percentile, Number(game_details.duration))
+            {
+              updateScore(playId, count, percentile, Number(game_details.duration))
             }
             <GameOverAnimate>
               <Typography
@@ -366,26 +398,28 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
                 Game Over
               </Typography>
             </GameOverAnimate>
-
+ 
             <Typography variant="h4">Your score: {count}</Typography>
             {
-              pass ? (
+              calculatingScore ? (
                 <>
                 <Typography variant="h4">
-                  Hi{username}, Congratulations! You have done it. You have mastered {game_details.name}.
+                  Hi{username}, We are calculating your score, Just give us sometime...
+                  {calculateLevel()}
                 </Typography>
+                  {finalMessage}
                 </>
-
+ 
               ) : 
               
               (
                 <>
                 <Typography variant="h4">
-                  Hi{username}, keep going, score {game_details.passing_average} or more to cross the line.
+                  {finalMessage}
                 </Typography>
                 </>
               )
-
+ 
             }
             <Typography variant="h4">
               {/* Your percentile: {percentile} */}
@@ -397,7 +431,7 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
               <ScoreContainer>
                 <Typography variant="h5">
                   <div style={{ borderBottom: '1px solid black' }}>Previous Scores</div>
-
+ 
                   <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
                     {user.games.map((game) => {
                       return (
@@ -422,5 +456,5 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
     </>
   );
 };
-
+ 
 export default QuestionSection;

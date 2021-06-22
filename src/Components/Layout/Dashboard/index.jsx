@@ -86,7 +86,7 @@ function SimpleCard({g_id, u_id}) {
   });
 
   return (
-    <Grid widget-container>
+    <Grid >
       <Grid item md={12}>
         <Card className=" widget-container">
           <CardContent className="dashboard-background">
