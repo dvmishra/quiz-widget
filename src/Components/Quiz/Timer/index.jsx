@@ -48,16 +48,17 @@ const Timer = ({ duration, updateDuration }) => {
 
   const displayTime = () => moment.duration(time, 'seconds').format('hh:mm:ss');
 
-  return (
-    <div style={{ marginTop: '-10px' }}>
-      <div className={classes.root}>
-        <LinearProgress variant="determinate" style={{ height: '10px' }} value={progress} />
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', zIndex: '10' }}>
-        <TimeContainer background={timerColor}>{displayTime()}</TimeContainer>
-      </div>
-    </div>
-  );
+  // return (
+  //   <div style={{ marginTop: '-10px' }}>
+  //     <div className={classes.root}>
+  //       <LinearProgress variant="determinate" style={{ height: '10px' }} value={progress} />
+  //     </div>
+  //     <div style={{ display: 'flex', justifyContent: 'flex-end', zIndex: '10' }}>
+  //       <TimeContainer background={timerColor}>{displayTime()}</TimeContainer>
+  //     </div>
+  //   </div>
+  // );
+  return null;
 };
 
 export default Timer;

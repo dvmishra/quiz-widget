@@ -16,3 +16,9 @@ export const GameOverAnimate = styled.div`
 export const ScoreContainer = styled.section`
   border: 1px solid black;
 `;
+
+export const Score = styled.div`
+  font-size: 2rem;
+  font-weight: 600;
+  color: #3fb599;
+`;

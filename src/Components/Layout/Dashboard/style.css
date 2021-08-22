@@ -8,10 +8,10 @@
   z-index: 10;
   box-shadow: 0px 5px 20px 1px #e8e8e8 inset, 0 1px 3px rgba(0, 0, 0, 0.12),
     0 1px 2px rgba(0, 0, 0, 0.24) !important;
-  background: url('../../../images/maths.png');
+  /* background: url('../../../images/maths.png');
   background-repeat: repeat;
   background-position: top;
-  background-size: 50%;
+  background-size: 50%; */
 }
 
 .quiz-image {
@@ -26,6 +26,12 @@
   bottom: 0;
   right: 0;
   z-index: -1;
+}
+
+@media only screen and (max-width: 800px) {
+  .widget-container {
+    width: 99vw;
+  }
 }
 
 @media only screen and (max-width: 905px) {

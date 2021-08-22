@@ -13,6 +13,14 @@
   }
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+html * {
+  font-family: 'Poppins', sans-serif !important;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -47,7 +55,6 @@
   box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.07);
   border-radius: 12px;
   overflow: hidden;
-  
 }
 
 .quiz_widget__app a {
@@ -83,7 +90,6 @@
   flex-direction: column;
   padding: 6px 0;
 }
-
 
 .quiz_widget__posted_by {
   font-size: 14px;

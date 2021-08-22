@@ -4,15 +4,12 @@ import React from 'react';
 const Message = ({ children, className }) => (
   <Card
     style={{
-      padding: '50px',
-      textAlign: 'center',
-      marginTop: '3%',
-      marginBottom: '5%',
+      padding: '12px 14px',
+      borderRadius: '14px',
       height: '100%',
-      background: 'transparent',
       backdropFilter: 'blur(4px)',
       lineHeight: '2em',
-      borderBottom: '3px solid #7482E8',
+      boxShadow: 'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px',
     }}
     className={className}
   >

@@ -15,7 +15,7 @@ import { UserContext, userData } from './UserContext';
 import quiz from '../../../images/quiz_board.svg';
 import axios from 'axios';
 
-export const Dashboard = ({g_id, u_id}) => {
+export const Dashboard = ({ g_id, u_id }) => {
   const [user, setUser] = useState(userData);
   return (
     <Paper
@@ -60,25 +60,26 @@ const useStyles = makeStyles({
   },
 });
 
-function SimpleCard({g_id, u_id}) {
+function SimpleCard({ g_id, u_id }) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
-  
+
   useEffect(() => {
-    if(loading){
+    if (loading) {
       const payload = {
-        "game_id": g_id,
-        "user_id": u_id
-      }
-  
-      axios.post("https://profved.com/wp-json/wp/v1/game_meta_data", { payload })
-        .then(response => {
+        game_id: g_id,
+        user_id: u_id,
+      };
+
+      axios
+        .post('https://profved.com/wp-json/wp/v1/game_meta_data', { payload })
+        .then((response) => {
           setData(response.data.msg[0]);
           setLoading(false);
         })
-        .catch(exception => {
+        .catch((exception) => {
           console.log(exception);
           setLoading(false);
         });
@@ -86,13 +87,13 @@ function SimpleCard({g_id, u_id}) {
   });
 
   return (
-    <Grid >
-      <Grid item md={12}>
-        <Card className=" widget-container">
-          <CardContent className="dashboard-background">
+    <Grid>
+      <Grid item md={12} className="widget-container">
+        <Card>
+          <CardContent style={{ padding: '0 0 24px 0' }} className="dashboard-background">
             {loading ? (
               <Skeleton variant="rect" width="100%" height="20%">
-                <div style={{ paddingTop: '10%' }} />
+                {/* <div style={{ paddingTop: '10%' }} /> */}
               </Skeleton>
             ) : (
               <>

@@ -1,10 +1,11 @@
 import { Card, CardContent, Typography } from '@material-ui/core';
 import React from 'react';
+import { Header, Title } from './styled';
 
 const CourseHeader = ({ heading }) => {
   return (
     <>
-      <Card
+      {/* <Card
         style={{
           background: 'transparent',
           borderBottom: '3px solid #7482E8',
@@ -17,7 +18,10 @@ const CourseHeader = ({ heading }) => {
             {heading}
           </Typography>
         </CardContent>
-      </Card>
+      </Card> */}
+      <Header>
+        <Title>{heading}</Title>
+      </Header>
     </>
   );
 };
