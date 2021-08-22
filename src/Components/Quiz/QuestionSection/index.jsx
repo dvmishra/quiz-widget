@@ -365,10 +365,10 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
         <div style={{ padding: '0 1rem', position: 'relative', top: '-41px' }}>
           {/* <FadeInUpAnimate> */}
           {/* <span className="emoji hourglass"/> */}
-          <Timer
+          {/* <Timer
             duration={gameDuration}
             updateDuration={(remainingTime) => _updateTime(remainingTime)}
-          />
+          /> */}
           <Message>
             {/* <div className={classes.currentScore}>
                 <div className={classes.currentScoreText}> {count} </div>
@@ -385,7 +385,12 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
                           trailColor: '#3F51B532',
                         })}
                         value={percentage}
-                        text={`${percentage}%`}
+                        text={
+                          <Timer
+                            duration={gameDuration}
+                            updateDuration={(remainingTime) => _updateTime(remainingTime)}
+                          />
+                        }
                       />
                     )}
                   </ChangingProgressProvider>
