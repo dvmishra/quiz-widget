@@ -24,6 +24,8 @@ import { Queue } from '../../../utilities/Queue';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import arrowImage from '../../../images/arrow_forward.svg';
+import alarm from '../../../images/alarm.svg';
+import replayGame from '../../../images/replay.svg';
 import ChangingProgressProvider from '../Timer/ChangingProgressProvider';
 import {
   CircularProgressbar,
@@ -472,65 +474,83 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
         </div>
       ) : (
         <SlideInRightAnimate>
-          <Message>
-            {updateScore(playId, count, percentile, Number(game_details.duration))}
-            <GameOverAnimate>
-              <Typography
-                variant="h3"
-                display="inline"
-                style={{
-                  textTransform: 'uppercase',
-                  fontFamily: "'Press Start 2P', cursive",
-                  fontSize: '3em',
-                }}
-              >
-                Game Over
-              </Typography>
-            </GameOverAnimate>
+          <div style={{ padding: '0 1rem', position: 'relative', top: '-41px' }}>
+            <Message>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div style={{ fontSize: '20px', fontWeight: 500 }}>Time’s up!</div>
+                <img src={alarm} />
+              </div>
+            </Message>
 
-            <Typography variant="h4">Your score: {count}</Typography>
-            {calculatingScore ? (
-              <>
+            <div style={{ position: 'relative', top: '40px' }}>
+              <Message>
+                {updateScore(playId, count, percentile, Number(game_details.duration))}
+                <GameOverAnimate>
+                  <Typography
+                    variant="h3"
+                    display="inline"
+                    style={{
+                      textTransform: 'uppercase',
+                      fontFamily: "'Press Start 2P', cursive",
+                      fontSize: '3em',
+                    }}
+                  >
+                    Game Over
+                  </Typography>
+                </GameOverAnimate>
+
+                <Typography variant="h4">Your score: {count}</Typography>
+                {calculatingScore ? (
+                  <>
+                    <Typography variant="h4">
+                      Hi{username}, We are calculating your score, Just give us sometime...
+                      {calculateLevel()}
+                    </Typography>
+                    {finalMessage}
+                  </>
+                ) : (
+                  <>
+                    <Typography variant="h4">{finalMessage}</Typography>
+                  </>
+                )}
                 <Typography variant="h4">
-                  Hi{username}, We are calculating your score, Just give us sometime...
-                  {calculateLevel()}
-                </Typography>
-                {finalMessage}
-              </>
-            ) : (
-              <>
-                <Typography variant="h4">{finalMessage}</Typography>
-              </>
-            )}
-            <Typography variant="h4">
-              {/* Your percentile: {percentile} */}
-              {/* {percentileImage()} */}
-              {/* You were compared against score of{' '}
+                  {/* Your percentile: {percentile} */}
+                  {/* {percentileImage()} */}
+                  {/* You were compared against score of{' '}
               {countValue} peers. */}
-            </Typography>
-            {user.games.length > 0 && (
-              <ScoreContainer>
-                <Typography variant="h5">
-                  <div style={{ borderBottom: '1px solid black' }}>Previous Scores</div>
-
-                  <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
-                    {user.games.map((game) => {
-                      return (
-                        <li>
-                          Duration: {Number(game.duration) / 60} mins, Score: {game.score}
-                        </li>
-                      );
-                    })}
-                  </div>
                 </Typography>
-              </ScoreContainer>
-            )}
-          </Message>
-          <div className="start-game-container">
-            {/* <SetTimer setTime={setGameTime} /> */}
-            <Button color="primary" variant="contained" style={{ marginTop: 10 }} onClick={replay}>
-              <Typography variant="h6">Play Again</Typography>
-            </Button>
+                {user.games.length > 0 && (
+                  <ScoreContainer>
+                    <Typography variant="h5">
+                      <div style={{ borderBottom: '1px solid black' }}>Previous Scores</div>
+
+                      <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
+                        {user.games.map((game) => {
+                          return (
+                            <li>
+                              Duration: {Number(game.duration) / 60} mins, Score: {game.score}
+                            </li>
+                          );
+                        })}
+                      </div>
+                    </Typography>
+                  </ScoreContainer>
+                )}
+              </Message>
+            </div>
+            <div className="start-game-container">
+              {/* <SetTimer setTime={setGameTime} /> */}
+              <Button
+                color="primary"
+                variant="contained"
+                style={{ marginTop: 10, borderRadius: '8px', textTransform: 'none' }}
+                onClick={replay}
+                classes={{ contained: classes.contained }}
+                endIcon={<img src={replayGame}></img>}
+              >
+                <Typography variant="h6">Replay</Typography>
+              </Button>
+            </div>
           </div>
         </SlideInRightAnimate>
       )}
