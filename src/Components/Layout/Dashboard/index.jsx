@@ -14,19 +14,14 @@ import './style.css';
 import { UserContext, userData } from './UserContext';
 import quiz from '../../../images/quiz_board.svg';
 import axios from 'axios';
+import Loader from 'react-loader-spinner';
 
 export const Dashboard = ({ g_id, u_id }) => {
   const [user, setUser] = useState(userData);
   return (
-    <Paper
-      variant="outlined"
-      style={{ display: 'flex', flexDirection: 'row', backgroundColor: '#F5F7FA' }}
-    >
-      <UserContext.Provider value={{ user, setUser }}>
-        <SimpleCard g_id={g_id} u_id={u_id} />
-      </UserContext.Provider>
-      {/* <Skeleton variant="rect" width={210} height={118} /> */}
-    </Paper>
+    <UserContext.Provider value={{ user, setUser }}>
+      <SimpleCard g_id={g_id} u_id={u_id} />
+    </UserContext.Provider>
   );
 };
 
@@ -87,22 +82,37 @@ function SimpleCard({ g_id, u_id }) {
   });
 
   return (
-    <Grid>
-      <Grid item md={12} className="widget-container">
-        <Card>
-          <CardContent style={{ padding: '0 0 24px 0' }} className="dashboard-background">
-            {loading ? (
-              <Skeleton variant="rect" width="100%" height="20%">
-                {/* <div style={{ paddingTop: '10%' }} /> */}
-              </Skeleton>
-            ) : (
-              <>
-                <QuestionSection game_details={data} g_id={g_id} u_id={u_id} />
-              </>
-            )}
-          </CardContent>
+    <>
+      {loading ? (
+        <Card
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: '16px',
+            boxShadow: 'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px',
+          }}
+        >
+          <Loader type="Oval" color="#3F51B5" height={120} width={200} />
         </Card>
-      </Grid>
-    </Grid>
+      ) : (
+        <>
+          <Paper
+            variant="outlined"
+            style={{ display: 'flex', flexDirection: 'row', backgroundColor: '#F5F7FA' }}
+          >
+            <Grid>
+              <Grid item md={12} className="widget-container">
+                <Card>
+                  <CardContent style={{ padding: '0 0 24px 0' }} className="dashboard-background">
+                    <QuestionSection game_details={data} g_id={g_id} u_id={u_id} />
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+          </Paper>
+        </>
+      )}
+    </>
   );
 }

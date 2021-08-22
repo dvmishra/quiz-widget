@@ -449,6 +449,7 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
                       inputProps={{
                         style: {
                           padding: 0,
+                          textAlign: 'center',
                         },
                         maxLength: 3,
                         inputMode: 'numeric',
