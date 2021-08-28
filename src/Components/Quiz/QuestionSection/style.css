@@ -16,6 +16,10 @@
   }
 }
 
+.primary-color-bg {
+  background-color: #3f51b5 !important;
+}
+
 @media only screen and (max-width: 455px) {
   .start-game-container {
     display: grid;
@@ -55,7 +59,7 @@
 
 @keyframes twoFrames {
   50% {
-      content: var(--emoji);
+    content: var(--emoji);
   }
 }
 

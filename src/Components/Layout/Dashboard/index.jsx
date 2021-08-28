@@ -93,24 +93,24 @@ function SimpleCard({ g_id, u_id }) {
             boxShadow: 'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px',
           }}
         >
-          <Loader type="Oval" color="#3F51B5" height={120} width={200} />
+          <Loader type="Oval" color="#3F51B5" height={120} width={200}  />
         </Card>
       ) : (
         <>
-          <Paper
+          {/* <Paper
             variant="outlined"
             style={{ display: 'flex', flexDirection: 'row', backgroundColor: '#F5F7FA' }}
-          >
-            <Grid>
-              <Grid item md={12} className="widget-container">
-                <Card>
-                  <CardContent style={{ padding: '0 0 24px 0' }} className="dashboard-background">
-                    <QuestionSection game_details={data} g_id={g_id} u_id={u_id} />
-                  </CardContent>
-                </Card>
-              </Grid>
+          > */}
+          <Grid>
+            <Grid item md={12} className="widget-container">
+              <Card style={{ boxShadow: 'none' }}>
+                <CardContent style={{ padding: '0 0 24px 0' }} className="dashboard-background">
+                  <QuestionSection game_details={data} g_id={g_id} u_id={u_id} />
+                </CardContent>
+              </Card>
             </Grid>
-          </Paper>
+          </Grid>
+          {/* </Paper> */}
         </>
       )}
     </>

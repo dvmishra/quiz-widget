@@ -10,36 +10,6 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import Slider from '@material-ui/core/Slider';
 import { Card, Grid } from '@material-ui/core';
 
-const StyledMenu = withStyles({
-  paper: {
-    border: '1px solid #d3d4d5',
-  },
-})((props) => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'center',
-    }}
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'center',
-    }}
-    {...props}
-  />
-));
-
-const StyledMenuItem = withStyles((theme) => ({
-  root: {
-    '&:focus': {
-      backgroundColor: theme.palette.primary.main,
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.white,
-      },
-    },
-  },
-}))(MenuItem);
 
 const useStyles = makeStyles({
   track: {
@@ -76,7 +46,7 @@ const useStyles = makeStyles({
 
 export default function DurationMenu({ setTime }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [duration, setDuration] = React.useState('1');
+  const [duration, setDuration] = React.useState('5');
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -148,7 +118,7 @@ export default function DurationMenu({ setTime }) {
       </Grid>
       <div style={{ paddingTop: '5px' }}>
         <Slider
-          defaultValue={0}
+          defaultValue={100}
           valueLabelFormat={valueLabelFormat}
           getAriaValueText={valuetext}
           aria-labelledby="discrete-slider-restrict"
@@ -158,7 +128,10 @@ export default function DurationMenu({ setTime }) {
           classes={{
             ...classes,
           }}
-          onChange={(event, value) => setDuration(valueLabelFormat(value))}
+          onChange={(event, value) => {
+            setDuration(valueLabelFormat(value));
+            setTime(Number(valueLabelFormat(value)) * 60);
+          }}
         />
       </div>
     </Card>

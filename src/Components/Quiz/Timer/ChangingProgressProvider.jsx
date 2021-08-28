@@ -10,11 +10,12 @@ class ChangingProgressProvider extends React.Component {
   };
 
   componentDidMount() {
+    console.log(this.props.time);
     setInterval(() => {
       this.setState({
         valuesIndex: (this.state.valuesIndex + 1) % this.props.values.length,
       });
-    }, this.props.interval);
+    }, this.props.time * 10);
   }
 
   render() {

@@ -34,6 +34,8 @@ import {
 } from 'react-circular-progressbar';
 
 import 'react-circular-progressbar/dist/styles.css';
+import { RatingIcon } from '../../RatingIcon';
+import Star from '@material-ui/icons/Star';
 const useStyles = makeStyles({
   root: {
     width: 60,
@@ -220,21 +222,64 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
     }
   };
 
+  const LEVELS = {
+    CHALLENGER: 'CHALLENGER',
+    MASTER: 'MASTER',
+    GENIUS: 'GENIUS',
+    STARTER: 'STARTER',
+    KIDDO: 'KIDDO',
+  };
+
+  const ScoreLevels = {
+    FIVE: {
+      50: LEVELS.STARTER,
+      60: LEVELS.CHALLENGER,
+      70: LEVELS.MASTER,
+      80: LEVELS.GENIUS,
+    },
+
+    ONE: {
+      10: LEVELS.CHALLENGER,
+      20: LEVELS.MASTER,
+      30: LEVELS.GENIUS,
+    },
+
+    THREE: {
+      30: LEVELS.STARTER,
+      40: LEVELS.CHALLENGER,
+      50: LEVELS.MASTER,
+      60: LEVELS.GENIUS,
+    },
+    getLevel(time) {
+      return this[time];
+    },
+  };
+
+  const ratingLevel = (level) => {
+    switch (level) {
+      case LEVELS.GENIUS:
+        return 5;
+      case LEVELS.MASTER:
+        return 4;
+      case LEVELS.CHALLENGER:
+        return 3;
+      case LEVELS.STARTER:
+        return 2;
+      default:
+        return 1;
+    }
+  };
+
   const calculateLevel = () => {
-    let message =
-      'Hi' +
-      username +
-      ', Challenge yourself! You are currently at the STARTER level. Aim for ' +
-      game_details.challenger_score +
-      ' to go to the CHALLENGER LEVEL.';
+    let message = `Hi ${username}, Challenge yourself! You are currently at the STARTER level. Aim for ${game_details.challenger_score} to go to the CHALLENGER LEVEL.`;
 
     switch (true) {
       case count >= Number(game_details.genius_score):
         message =
           'Hi' +
           username +
-          ', you were born to be genius! You are at the highet level now. But geniuses never stop, if you want to go further, keep practicing, keep going higher.';
-        setFinalMessage(message);
+          ', you were born to be genius! You are at the highest level now. But geniuses never stop, if you want to go further, keep practicing, keep going higher.';
+
         break;
       case count >= Number(game_details.master_score):
         message =
@@ -243,25 +288,22 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
           ', you are at MASTER level now, Congrats! soon to become a Genius! Master this a little more. Aim for ' +
           game_details.genius_score +
           ' and go to the GENIUS LEVEL.';
-        setFinalMessage(message);
         break;
       case count >= Number(game_details.challenger_score):
         message =
           'Hi' +
           username +
-          ', you are a CHALLENGER now! You are soon to become a Master! Challenge yoruself a little more. Aim for ' +
+          ', you are a CHALLENGER now! You are soon to become a Master! Challenge yourself a little more. Aim for ' +
           game_details.master_score +
           ' and go to the MASTER LEVEL.';
-        setFinalMessage(message);
-        console.log(message);
         break;
       default:
         setFinalMessage(message);
         break;
     }
+    setFinalMessage(message);
     console.log(message);
     console.log(count);
-    console.log(game_details.challenger_score);
     setCalculatingScore(false);
     setPercentile(myPercentile(count));
   };
@@ -296,6 +338,7 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
     setTime(remainingTime);
     if (remainingTime <= 0) {
       setGame(false);
+      calculateLevel();
       gameDetails = JSON.parse(JSON.stringify(user));
       gameDetails.games.push({ duration: gameDuration, startTime: startTime, score: count });
     }
@@ -324,19 +367,23 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
       .then((response) => {});
   };
 
+  const timerArray = () => {
+    const arr = new Array();
+    for (let i = 100; i >= 0; i--) {
+      arr.push(i);
+    }
+    return arr;
+  };
+
   return (
     <>
       <CourseHeader heading={game_details.name} />
       {isIntroduction ? (
         <div style={{ padding: '0 1rem', position: 'relative', top: '-41px' }}>
-          {/* <img src={quiz} width="283" height="auto" className="quiz-image" /> */}
-          {/* <SlideInRightAnimate> */}
           <Message>
             <Typography style={{ fontWeight: 500, color: 'black', marginBottom: 10 }} variant="h5">
               {game_details.description}
             </Typography>
-
-            {/* <div style={{ paddingTop: '5px', color: 'black' }}> */}
             <ul>
               <li>
                 <Typography variant="h6" style={{ fontWeight: '400' }}>
@@ -361,24 +408,14 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
               </Typography>
             </Button>
           </div>
-          {/* </SlideInRightAnimate> */}
         </div>
       ) : game ? (
         <div style={{ padding: '0 1rem', position: 'relative', top: '-41px' }}>
-          {/* <FadeInUpAnimate> */}
-          {/* <span className="emoji hourglass"/> */}
-          {/* <Timer
-            duration={gameDuration}
-            updateDuration={(remainingTime) => _updateTime(remainingTime)}
-          /> */}
           <Message>
-            {/* <div className={classes.currentScore}>
-                <div className={classes.currentScoreText}> {count} </div>
-              </div> */}
             <Grid container>
               <Grid item md={6} sm={6} xs={6}>
                 <div style={{ height: '100px', width: '100px' }}>
-                  <ChangingProgressProvider values={[100, 80, 60, 40, 20, 0]}>
+                  <ChangingProgressProvider values={timerArray()} time={gameDuration}>
                     {(percentage) => (
                       <CircularProgressbar
                         styles={buildStyles({
@@ -473,52 +510,40 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
           {/* </FadeInUpAnimate> */}
         </div>
       ) : (
-        <SlideInRightAnimate>
-          <div style={{ padding: '0 1rem', position: 'relative', top: '-41px' }}>
-            <Message>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div style={{ fontSize: '20px', fontWeight: 500 }}>Time’s up!</div>
-                <img src={alarm} />
-              </div>
-            </Message>
+        <div style={{ padding: '0 1rem', position: 'relative', top: '-41px' }}>
+          <Message>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ fontSize: '20px', fontWeight: 500 }}>Time’s up!</div>
+              <img src={alarm} />
+            </div>
+          </Message>
 
-            <div style={{ position: 'relative', top: '40px' }}>
-              <Message>
+          <div style={{ position: 'relative', top: '40px' }}>
+            <Message className={'primary-color-bg'}>
+              <div style={{ textAlign: 'center' }}>
                 {updateScore(playId, count, percentile, Number(game_details.duration))}
-                <GameOverAnimate>
-                  <Typography
-                    variant="h3"
-                    display="inline"
-                    style={{
-                      textTransform: 'uppercase',
-                      fontFamily: "'Press Start 2P', cursive",
-                      fontSize: '3em',
-                    }}
-                  >
-                    Game Over
-                  </Typography>
-                </GameOverAnimate>
 
-                <Typography variant="h4">Your score: {count}</Typography>
-                {calculatingScore ? (
-                  <>
-                    <Typography variant="h4">
-                      Hi{username}, We are calculating your score, Just give us sometime...
-                      {calculateLevel()}
-                    </Typography>
-                    {finalMessage}
-                  </>
-                ) : (
-                  <>
-                    <Typography variant="h4">{finalMessage}</Typography>
-                  </>
-                )}
-                <Typography variant="h4">
-                  {/* Your percentile: {percentile} */}
-                  {/* {percentileImage()} */}
-                  {/* You were compared against score of{' '}
-              {countValue} peers. */}
+                <Typography
+                  variant="h6"
+                  style={{ color: 'white', fontSize: '24px' }}
+                  display="inline"
+                >
+                  Your score:{' '}
                 </Typography>
+                <Typography
+                  variant="h6"
+                  style={{ color: 'white', fontSize: '36px', fontWeight: 600 }}
+                  display="inline"
+                >
+                  {count}
+                </Typography>
+
+                <RatingIcon count={5} />
+
+                <Typography variant="h5" style={{ color: 'white', fontSize: '24px' }}>
+                  {finalMessage}
+                </Typography>
+
                 {user.games.length > 0 && (
                   <ScoreContainer>
                     <Typography variant="h5">
@@ -536,10 +561,10 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
                     </Typography>
                   </ScoreContainer>
                 )}
-              </Message>
-            </div>
+              </div>
+            </Message>
+
             <div className="start-game-container">
-              {/* <SetTimer setTime={setGameTime} /> */}
               <Button
                 color="primary"
                 variant="contained"
@@ -552,7 +577,7 @@ const QuestionSection = ({ game_details, g_id, u_id }) => {
               </Button>
             </div>
           </div>
-        </SlideInRightAnimate>
+        </div>
       )}
     </>
   );
